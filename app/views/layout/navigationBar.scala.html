@@ -1,0 +1,33 @@
+@(page: String)
+
+@*
+* Navigation bar showing the current active page
+*@
+<div class="navbar-wrapper">
+    <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Vienna Scala UG</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a @if(page == "start") {class="active"} href="@routes.Application.index()">Start</a></li>
+                        <li><a @if(page == "talks") {class="active"} href="@routes.Application.talks()">Talks</a></li>
+                        <li><a @if(page == "group") {class="active"} href="@routes.Application.group()">Group</a></li>
+                        <li><a @if(page == "about") {class="active"} href="@routes.Application.about()">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
