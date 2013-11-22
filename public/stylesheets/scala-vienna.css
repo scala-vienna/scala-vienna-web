@@ -1,0 +1,19 @@
+.splash {
+    height: 600px;
+    background-image: url('/assets/images/vienna-riesen-rad.png');
+    margin-top: -20px;
+    background-size: cover;
+    padding-right: -50px;
+    padding-left: -50px;
+    margin-right: -50px;
+    margin-left: -50px;
+}
+
+.splash h1 {
+    font-size: 2em;
+}
+
+#title {
+    margin-top: -50px;
+    margin-left: -30px;
+}

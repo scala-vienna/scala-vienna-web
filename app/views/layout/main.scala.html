@@ -26,13 +26,17 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/scala-vienna.css")">
 </head>
 <!-- NAVBAR
 ================================================== -->
 <body>
 @layout.navigationBar(page)
 
-@content
+
+<div class="container">
+    @content
+</div>
 
     <!-- FOOTER -->
     <footer>
