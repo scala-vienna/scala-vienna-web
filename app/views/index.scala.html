@@ -1,3 +1,5 @@
+@(upcomingEvents: Seq[MeetupEvent])
+
 @layout.main("Start", "start") {
 
 <!-- Front page image
@@ -42,14 +44,13 @@
         <div class="col-md-8">
             <h1>Upcoming events</h1>
 
-            <h2 class="events-heading">First event. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-
-            <h2 class="events-heading">Second event. <span class="text-muted">It'll ALSO blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-
-            <h2 class="events-heading">Third event. <span class="text-muted">What else?!</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            @upcomingEvents.take(3).map { event =>
+                <h2 class="events-heading">@event.name <span class="text-muted">@event.displayTime @event.venue.name</span></h2>
+                <div class="lead event-description">
+                    @Html(event.description)
+                </div>
+                <a class=".readMore" href="@event.url">Read more...</a>
+            }
 
             <p><a class="btn btn-primary" href="#" role="button">More events &raquo;</a></p>
 
@@ -127,3 +128,12 @@
     </div>
 
 }
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.event-description' ).dotdotdot({
+            after: 'a.readMore'
+        })
+    })
+</script>
