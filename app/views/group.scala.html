@@ -1,9 +1,14 @@
 @layout.main("Group", "group") {
 
-<div class="page-header">
-    <h1>Google group page</h1>
-</div>
+    <div class="page-header">
+        <h1>Google group page</h1>
+    </div>
 
+    <div id="google-groups">
+        <iframe id="forum_embed" src="javascript:void(0)" scrolling="no" frameborder="0" width="900" height="700"></iframe>
+    </div>
 
-<p>Lorem impsum</p>
+    <script type="text/javascript">
+        document.getElementById("forum_embed").src = "https://groups.google.com/forum/embed/?place=forum/scala-vienna";
+    </script>
 }
