@@ -1,21 +1,21 @@
+
+/** main background image */
 .splash {
     height: 600px;
     background-image: url('/assets/images/vienna-riesen-rad.png');
-    margin-top: -20px;
     background-size: cover;
-    padding-right: -50px;
-    padding-left: -50px;
-    margin-right: -50px;
-    margin-left: -50px;
+    width: auto;
+    margin-top: -91px;
 }
+
+/** offset splash container from navbar */
+.splash .container {
+    padding-top: 91px;
+}
+
 
 .splash h1 {
     font-size: 2em;
-}
-
-#title {
-    margin-top: -50px;
-    margin-left: -30px;
 }
 
 #google-groups {
@@ -26,4 +26,9 @@
   min-height:150px;
   max-height:150px;
   height:150px;
+}
+
+/* some spacing for footer */
+footer {
+    margin-top: 40px;
 }
