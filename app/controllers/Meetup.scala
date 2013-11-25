@@ -16,7 +16,8 @@ import play.api.libs.concurrent.Execution.Implicits._
  */
 object Meetup {
 
-  val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse("")
+  val envApiKey = scala.util.Properties.envOrElse("MEETUP_API_KEY", "")
+  val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse(envApiKey)
 
   def upcomingEvents: Future[Seq[MeetupEvent]] = {
     WS.url("https://api.meetup.com/2/events")
@@ -26,7 +27,7 @@ object Meetup {
         if (result.status == 200) {
           transformEvents(result.json)
         } else {
-          Logger.warn("Could not retrieve events form meetup. Did you configure the apiKey in the application configuration?")
+          Logger.warn("Could not retrieve events form meetup. Did you configure the apiKey in the application configuration or the MEETUP_API_KEY environment variable?")
           Seq.empty
         }
       }
