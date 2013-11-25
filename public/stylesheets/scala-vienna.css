@@ -2,7 +2,7 @@
 /** main background image */
 .splash {
     height: 600px;
-    background-image: url('/assets/images/vienna-riesen-rad.png');
+    background-image: url('/assets/images/vienna-riesen-rad.jpg');
     background-size: cover;
     width: auto;
     margin-top: -91px;
