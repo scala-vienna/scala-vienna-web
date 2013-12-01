@@ -40,31 +40,16 @@
     <br/>
 
     <div class="row events">
+        <h1>Upcoming events</h1>
         <div class="col-md-8">
-            <h1>Upcoming events</h1>
-
-            @upcomingEvents.take(3).map { photo =>
-                <h2 class="events-heading">@photo.name <span class="text-muted">@photo.displayTime @photo.venue.name</span></h2>
-                <div class="lead photo-description">
-                    @Html(photo.description)
+            @upcomingEvents.take(3).map { event =>
+                <h2 class="events-heading">@event.name</h2>
+                <p class="event-meta">@event.displayTime @@ @event.venue.name</p>
+                <div class="lead event-description">
+                @Html(event.description)
                 </div>
-                <a class=".readMore" href="@photo.url">Read more...</a>
+                <a class="btn btn-primary .readMore" role="button" href="@event.url">Read more...</a>
             }
-
-            <p><a class="btn btn-primary" href="#" role="button">More events &raquo;</a></p>
-
-            <h1>Past events</h1>
-
-            <h2 class="events-heading">First photo. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-
-            <h2 class="events-heading">Second photo. <span class="text-muted">It'll ALSO blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-
-            <h2 class="events-heading">Third photo. <span class="text-muted">What else?!</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-
-            <p><a class="btn btn-primary" href="#" role="button">More events &raquo;</a></p>
         </div>
         <div class="col-md-4">
             <!-- twitter test embedding -->
@@ -77,8 +62,8 @@
         </div>
     </div>
 
-    <h1>Talks</h1>
-    <div class="row">
+    <div class="row talks">
+        <h1>Talks</h1>
         <div class="col-lg-4">
             <img class="img-rounded" data-src="holder.js/350x200" alt="Generic placeholder image">
             <h2>Monads</h2>
@@ -96,8 +81,8 @@
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
-   <h1>Our Sponsors</h1>
     <div class="row sponsors">
+        <h1>Our Sponsors</h1>
         <div class="col-lg-2">
             <img class="img-rounded" data-src="holder.js/250x150" alt="Generic placeholder image">
             <h3>Sponsor name</h3>
@@ -127,7 +112,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.photo-description' ).dotdotdot({
+        $('.event-description' ).dotdotdot({
             after: 'a.readMore'
         })
     })
