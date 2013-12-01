@@ -13,6 +13,12 @@ object Application extends Controller {
     }
   }
 
+  def photos = Action.async { implicit request =>
+    Photos.findAll.map { allPhotos =>
+      Ok(views.html.photos(allPhotos))
+    }
+  }
+
   def talks = Action {
     Ok(views.html.talks())
   }

@@ -1,0 +1,19 @@
+@(photos: Seq[Photo])
+
+@layout.main("Stream[Photo]", "photos") {
+
+    <div class="container photos">
+        @photos.grouped(6).map { photoGroup =>
+        <div class="row">
+            @photoGroup.map { photo =>
+                <div class="col-lg-2">
+                    <a href="#" class="thumbnail">
+                        <img class="img-rounded img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
+                    </a>
+                </div>
+            }
+        </div>
+        }
+    </div><!-- end photos container -->
+
+}
