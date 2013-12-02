@@ -1,0 +1,21 @@
+@(posts: List[service.Post])
+
+
+@layout.main("Blogs", "blogs") {
+
+<div class="container">
+
+    @posts.map { post =>
+    <div class="row">
+        <H1><a href="@post.link" target="_blank">@post.title</a></h1>
+        <h3>@post.publishedDate.map(_.format("dd.MM.yyyy")) by @post.author</h3>
+        <p>
+            @Html(post.description.getOrElse(""))
+        </p>
+    </div>
+    }
+    <p>Nice day to begin...</p>
+
+</div><!-- end container -->
+
+}
