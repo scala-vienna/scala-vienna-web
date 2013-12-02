@@ -28,8 +28,8 @@ object Application extends Controller {
     Ok(views.html.group())
   }
 
-  def blogs = Action {
-    Ok(views.html.blogs(Posts.blogPosts))
+  def blogs = Action.async { implicit request =>
+    Posts.blogPosts.map(posts => Ok(views.html.blogs(posts.sortBy(_.publishedDate).reverse)))
   }
 
   def about = Action {

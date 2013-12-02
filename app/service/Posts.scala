@@ -5,7 +5,7 @@ import java.net.{ HttpURLConnection, URL }
 import com.sun.syndication.io.{ XmlReader, SyndFeedInput }
 import com.sun.syndication.feed.synd.{ SyndContent, SyndEntry }
 import scala.collection.JavaConversions._
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ Promise, ExecutionContext, Future }
 import ExecutionContext.Implicits.global
 import scala.util.{ Failure, Success }
 
@@ -23,8 +23,7 @@ object Posts {
     "http://blog.papauschek.com/feed/"
   )
 
-  // TODO: add asynchronous behaviour
-  def readEntries(feedUrl: String): List[Post] = {
+  def readEntries(feedUrl: String): Future[List[Post]] = Future {
     val url = new URL(feedUrl)
     val conn: HttpURLConnection = url.openConnection match {
       case conn: HttpURLConnection => conn
@@ -46,7 +45,12 @@ object Posts {
     }
   }
 
-  lazy val blogPosts: List[Post] =
-    blogs.toList.map(blogURL => readEntries(blogURL)).flatten.sortBy(_.publishedDate).reverse
+  def blogPosts: Future[List[Post]] = {
+    val p = Promise[List[Post]]
+    Future.sequence(blogs.toList.map(readEntries)).onSuccess {
+      case blogPosts => p.success(blogPosts.flatten)
+    }
+    p.future
+  }
 
 }
