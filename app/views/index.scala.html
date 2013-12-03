@@ -1,4 +1,4 @@
-@(upcomingEvents: Seq[MeetupEvent])
+@(upcomingEvents: Seq[MeetupEvent], pastEvents: Seq[MeetupEvent])
 
 @layout.main("Start", "start") {
 
@@ -40,16 +40,42 @@
     <br/>
 
     <div class="row events">
-        <h1>Upcoming events</h1>
         <div class="col-md-8">
-            @upcomingEvents.take(3).map { event =>
-                <h2 class="events-heading">@event.name</h2>
-                <p class="event-meta">@event.displayTime @@ @event.venue.name</p>
-                <div class="lead event-description">
-                @Html(event.description)
+            <h1>Events</h1>
+            <div>
+                <div class="row" id="upcoming">
+                    <h2>Upcoming</h2>
+                    @upcomingEvents.take(4).map { event =>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title event-title">@event.name<br><small>@event.displayTime @@ @event.venue.name</small></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="event-description">@event.description</div>
+                                <a class="btn btn-primary btn-sm pull-right" role="button" href="@event.url">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
                 </div>
-                <a class="btn btn-primary .readMore" role="button" href="@event.url">Read more...</a>
-            }
+                <div class="row" id="past">
+                    <h2>Past</h2>
+                    @pastEvents.take(4).map { event =>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title event-title">@event.name<br><small>@event.displayTime @@ @event.venue.name</small></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="event-description">@event.description</div>
+                                <a class="btn btn-primary btn-sm pull-right" role="button" href="@event.url">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <!-- twitter test embedding -->

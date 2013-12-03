@@ -19,9 +19,9 @@ object Meetup {
   val envApiKey = scala.util.Properties.envOrElse("MEETUP_API_KEY", "")
   val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse(envApiKey)
 
-  def upcomingEvents: Future[Seq[MeetupEvent]] = {
+  def retrieveEvents(status: String): Future[Seq[MeetupEvent]] = {
     WS.url("https://api.meetup.com/2/events")
-      .withQueryString("group_id" -> "5700242", "key" -> apiKey)
+      .withQueryString("group_id" -> "5700242", "key" -> apiKey, "status" -> status, "text_format" -> "plain")
       .get()
       .map { result =>
         if (result.status == 200) {
@@ -64,7 +64,7 @@ object Meetup {
           ),
           displayTime = dateTimeFormatter.print(new DateTime(time + utc_offset)),
           url = url,
-          description = description
+          description = description.replaceAll("\n+", "\n") // remove multiple line separators
         )
       }
     }

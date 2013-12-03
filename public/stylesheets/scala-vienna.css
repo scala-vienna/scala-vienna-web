@@ -28,10 +28,25 @@ p.entry-meta {
     font-weight: 200;
 }
 
+.event-title {
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
 .event-description {
+  padding: 0;
+  background-color: inherit;
+  text-align: justify;
+  white-space: pre;
+  border: 0;
   min-height:150px;
   max-height:150px;
-  height:150px;
+  height:200px;
+  overflow: hidden;
 }
 
 /* some spacing for footer */

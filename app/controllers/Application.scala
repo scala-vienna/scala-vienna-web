@@ -4,15 +4,17 @@ import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits._
 import service.{ Post, Posts }
 import play.api.cache.Cache
-import scala.concurrent.Promise
+import scala.concurrent.{ Future, Promise }
 import play.api.Play.current
 
 object Application extends Controller {
 
   def index = Action.async { implicit request =>
-
-    Meetup.upcomingEvents.map { upcoming =>
-      Ok(views.html.index(upcoming))
+    {
+      for {
+        upcoming <- Meetup.retrieveEvents("upcoming")
+        past <- Meetup.retrieveEvents("past")
+      } yield Ok(views.html.index(upcoming, past.reverse))
     }
   }
 
