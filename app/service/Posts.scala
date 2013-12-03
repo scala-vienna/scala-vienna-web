@@ -7,6 +7,7 @@ import com.sun.syndication.feed.synd.{ SyndContent, SyndEntry }
 import scala.collection.JavaConversions._
 import scala.concurrent.{ Promise, ExecutionContext, Future }
 import ExecutionContext.Implicits.global
+import play.api.Logger
 
 case class Post(title: String,
   link: String,
@@ -46,7 +47,7 @@ object Posts {
 
   def blogPosts: Future[List[Post]] = {
     val p = Promise[List[Post]]()
-    val futures = blogs.toList.map(readEntries).map(_.recover { case e => { e.printStackTrace(); Nil }})
+    val futures = blogs.toList.map(readEntries).map(_.recover { case e => { Logger.warn(s"Couldn't get blog posts: ${e.getMessage}"); Nil } })
     Future.sequence(futures).onSuccess { case blogPosts => p.success(blogPosts.flatten) }
     p.future
   }
