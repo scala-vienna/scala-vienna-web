@@ -53,3 +53,9 @@ p.entry-meta {
 footer {
     margin-top: 40px;
 }
+
+/** blog posts */
+.tags {
+    margin-top: 10px;
+    color: #999;
+}

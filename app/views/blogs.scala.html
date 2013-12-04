@@ -12,11 +12,12 @@
                 </div>
                 <div class="panel-body">
                     @Html(post.description.getOrElse(""))
-                    <br>
-                    Tags:
-                    @post.categories.map { category =>
-                        <a href="#">#@category</a>
-                    }
+                    <div class="tags">
+                        Tags:
+                        @post.categories.map { category =>
+                            <span class="tag">#@category</span>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
