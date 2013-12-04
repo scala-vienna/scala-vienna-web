@@ -7,10 +7,12 @@ import com.sun.syndication.feed.synd.{ SyndCategory, SyndContent, SyndEntry }
 import scala.collection.JavaConversions._
 import scala.concurrent.ExecutionContext
 import ExecutionContext.Implicits.global
-import play.api.Logger
+import play.api.{ Play, Logger }
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import play.api.Play.current
+import java.util
 
 case class Post(title: String,
   link: String,
@@ -19,18 +21,41 @@ case class Post(title: String,
   publishedDate: Option[Date],
   categories: Set[String])
 
-case class Blog(url: String, categories: Set[String])
+sealed case class Blog(url: String, categories: Set[String])
 
 object Posts {
 
-  val defaultCategories = Set("scala", "akka", "play", "reactive")
+  val defaultCategories = Play.configuration.getStringList("blogs.default.categories") match {
+    case Some(list) => list.toSet
+    case None => Set("scala", "akka", "play", "reactive")
+  }
 
-  val blogs = Seq(
-    Blog("http://rafael.cordones.me/feed/", defaultCategories),
-    Blog("http://devsketches.blogspot.com/feeds/posts/default", defaultCategories),
-    Blog("http://blog.papauschek.com/feed/", defaultCategories),
-    Blog("http://logician.eu/feed/", defaultCategories)
-  )
+  //  defaultCategories.foreach(println)
+
+  val blogs = Play.configuration.getObjectList("blogs.list") match {
+    case Some(list) => {
+      list.flatMap(b => {
+        try {
+          val url = b.get("url").unwrapped().asInstanceOf[String]
+          val cats = b.get("categories").unwrapped().asInstanceOf[util.ArrayList[String]].toSet
+          Seq(Blog(url, if (cats.isEmpty) defaultCategories else cats))
+        } catch {
+          case e: Throwable => {
+            Logger.warn(e.getMessage)
+            Seq()
+          }
+        }
+      })
+    }
+    case None => Seq(
+      Blog("http://rafael.cordones.me/feed/", defaultCategories),
+      Blog("http://devsketches.blogspot.com/feeds/posts/default", defaultCategories),
+      Blog("http://blog.papauschek.com/feed/", defaultCategories),
+      Blog("http://logician.eu/feed/", defaultCategories)
+    )
+  }
+
+  //  blogs.foreach(println)
 
   def readEntries(timeout: Duration = Duration.Zero)(blog: Blog): Future[List[Post]] = {
     val fetchFuture = Future {
