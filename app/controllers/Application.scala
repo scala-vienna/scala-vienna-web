@@ -6,6 +6,7 @@ import service.{ Post, Posts }
 import play.api.cache.Cache
 import scala.concurrent.{ Future, Promise }
 import play.api.Play.current
+import service.Github
 
 object Application extends Controller {
 
@@ -50,8 +51,11 @@ object Application extends Controller {
     }
   }
 
-  def about = Action {
-    Ok(views.html.about())
+  def about = Action.async {
+    Github.getContributors.map({
+      case conts => Ok(views.html.about(conts))
+    })
+
   }
 
 }
