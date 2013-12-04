@@ -12,6 +12,8 @@ libraryDependencies ++= Seq(
 
 play.Project.playScalaSettings
 
+scalacOptions ++= Seq("-feature")
+
 scalariformSettings
 
 com.jamesward.play.BrowserNotifierPlugin.livereload

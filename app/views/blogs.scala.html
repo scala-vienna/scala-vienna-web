@@ -1,21 +1,25 @@
 @(posts: List[service.Post])
 
-
 @layout.main("Blogs", "blogs") {
 
-<div class="container">
+    <div class="container">
 
-    @posts.map { post =>
-    <div class="row">
-        <H1><a href="@post.link" target="_blank">@post.title</a></h1>
-        <h3>@post.publishedDate.map(_.format("dd.MM.yyyy")) by @post.author</h3>
-        <p>
-            @Html(post.description.getOrElse(""))
-        </p>
+        @posts.map { post =>
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><a href="@post.link" target="_blank">@post.title</a><br><small>@post.publishedDate.map(_.format("dd.MM.YYYY kk:mm")) by @post.author</small></h3>
+                </div>
+                <div class="panel-body">
+                    @Html(post.description.getOrElse(""))
+                    <br>
+                    Tags:
+                    @post.categories.map { category =>
+                        <a href="#">#@category</a>
+                    }
+                </div>
+            </div>
+        </div>
+        }
     </div>
-    }
-    <p>Nice day to begin...</p>
-
-</div><!-- end container -->
-
 }
