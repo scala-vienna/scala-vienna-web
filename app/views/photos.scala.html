@@ -7,7 +7,7 @@
         <div class="row">
             @photoGroup.map { photo =>
                 <div class="col-lg-2">
-                    <a href="#" class="thumbnail">
+                    <a href="@photo.highresUrl" class="with-caption image-link thumbnail" title="@photo.caption">
                         <img class="img-rounded img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
                     </a>
                 </div>
@@ -16,4 +16,9 @@
         }
     </div><!-- end photos container -->
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.image-link').magnificPopup({type:'image'});
+        })
+    </script>
 }
