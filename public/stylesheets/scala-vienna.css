@@ -49,6 +49,21 @@ p.entry-meta {
   overflow: hidden;
 }
 
+.sponsor-name {
+    text-align: center;
+}
+
+.sponsor-img-container {
+    min-height: 150px;
+    vertical-align: middle;
+}
+
+.sponsor-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* some spacing for footer */
 footer {
     margin-top: 40px;
