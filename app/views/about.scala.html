@@ -1,4 +1,4 @@
-@(contributors: List[service.Github.Contributor])
+@(contributors: List[Option[service.Github.User]])
 
 @layout.main("About", "about") {
 
@@ -6,13 +6,50 @@
 
     <h1>About the <small>Vienna Scala User Group</small></h1>
 
+    <h2>Contributors</h2>
+    @contributors.flatten.grouped(4).map { group =>
     <div class="row">
-    @contributors.map { contributor =>
-        <span>
-            <a href="@contributor.html_url" target="_blank"><img src="@contributor.avatar_url" alt="@contributor.login"></a>
-        </span>
+    @group.map { contributor =>
+
+        <div class="col-lg-3 col-md-3">
+            <a href="@contributor.html_url" class="vcard-avatar" itemprop="image">
+                <img class="img-thumbnail" height="220" width="220" src="https://www.gravatar.com/avatar/@{contributor.gravatar_id}?s=220" >
+            </a>
+
+            <h2 class="row">
+                @contributor.name
+                <br>
+                <small>@contributor.login</small>
+            </h2>
+
+            <div class="row">
+                @contributor.location.map { location =>
+                <div><span class="glyphicon glyphicon-map-marker"></span>&nbsp;@location</div>
+                }
+                <div><span class="glyphicon glyphicon-book"></span>&nbsp;<a href="@contributor.blog" class="url" rel="nofollow me">@contributor.blog</a></div>
+                <div><span class="glyphicon glyphicon-flag"></span>&nbsp;On Github since @contributor.created_at.map(_.format("dd.MM.YYYY"))</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 text-center">
+                    <h4>
+                        <strong class="vcard-stat-count">@contributor.followers</strong>
+                        <br>
+                        <small>followers</small>
+                    </h4>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <h4>
+                        <strong class="vcard-stat-count">@contributor.following</strong>
+                        <br>
+                        <small>following</small>
+                    </h4>
+                </div>
+            </div>
+        </div>
     }
     </div>
+    }
 
     <p>Lorem impsum...</p>
 

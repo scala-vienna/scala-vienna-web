@@ -52,10 +52,10 @@ object Application extends Controller {
   }
 
   def about = Action.async {
-    Github.getContributors.map({
-      case conts => Ok(views.html.about(conts))
+    Github.getContributors.flatMap(conts => {
+      val userFutures = conts.map(cont => Github.getUser(cont.url))
+      Future.sequence(userFutures).map(users => Ok(views.html.about(util.Random.shuffle(users))))
     })
-
   }
 
 }
