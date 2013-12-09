@@ -74,3 +74,17 @@ footer {
     margin-top: 10px;
     color: #999;
 }
+
+.contributor {
+    padding: 20px;
+}
+
+.user-info {
+    height: 80px;
+}
+
+.one-liner {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

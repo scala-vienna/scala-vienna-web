@@ -11,34 +11,34 @@
     <div class="row">
     @group.map { contributor =>
 
-        <div class="col-lg-3 col-md-3">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 contributor">
             <a href="@contributor.html_url" class="vcard-avatar" itemprop="image">
                 <img class="img-thumbnail" height="220" width="220" src="https://www.gravatar.com/avatar/@{contributor.gravatar_id}?s=220" >
             </a>
 
-            <h2 class="row">
+            <h3 class="row one-liner">
                 @contributor.name
                 <br>
                 <small>@contributor.login</small>
-            </h2>
+            </h3>
 
-            <div class="row">
+            <div class="user-info row">
                 @contributor.location.map { location =>
-                <div><span class="glyphicon glyphicon-map-marker"></span>&nbsp;@location</div>
+                <div class="one-liner"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;@location</div>
                 }
-                <div><span class="glyphicon glyphicon-book"></span>&nbsp;<a href="@contributor.blog" class="url" rel="nofollow me">@contributor.blog</a></div>
-                <div><span class="glyphicon glyphicon-flag"></span>&nbsp;On Github since @contributor.created_at.map(_.format("dd.MM.YYYY"))</div>
+                <div class="one-liner"><span class="glyphicon glyphicon-book"></span>&nbsp;<a href="@contributor.blog" class="url" rel="nofollow me">@contributor.blog</a></div>
+                <div class="one-liner"><span class="glyphicon glyphicon-flag"></span>&nbsp;On Github since @contributor.created_at.map(_.format("dd.MM.YYYY"))</div>
             </div>
 
             <div class="row">
-                <div class="col-lg-4 text-center">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                     <h4>
                         <strong class="vcard-stat-count">@contributor.followers</strong>
                         <br>
                         <small>followers</small>
                     </h4>
                 </div>
-                <div class="col-lg-4 text-center">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                     <h4>
                         <strong class="vcard-stat-count">@contributor.following</strong>
                         <br>
@@ -50,8 +50,53 @@
     }
     </div>
     }
-
-    <p>Lorem impsum...</p>
+    <h2>Technologies</h2>
+    <div class="list-group">
+        <a class="list-group-item" href="http://scala-lang.org">
+            <img class="pull-right" height="40px" src="http://scala-lang.org/resources/img/smooth-spiral.png">
+            <h4 class="list-group-item-heading">The Scala Programming Language</h4>
+            <p class="list-group-item-text">
+                Scala is an acronym for “Scalable Language”. This means that Scala grows with you. You can play with it by typing one-line expressions and observing the results. But you can also rely on it for large mission critical systems, as many companies, including Twitter, LinkedIn, or Intel do.
+            </p>
+        </a>
+        <a class="list-group-item" href="http://www.playframework.com">
+            <img class="pull-right" height="40px" src="http://www.playframework.com/assets/images/logos/normal.png">
+            <h4 class="list-group-item-heading">Play Framework</h4>
+            <p class="list-group-item-text">
+                Play Framework makes it easy to build web applications with Java & Scala.
+                Play is based on a lightweight, stateless, web-friendly architecture.
+                Built on Akka, Play provides predictable and minimal resource consumption (CPU, memory, threads) for highly-scalable applications.
+            </p>
+        </a>
+        <a class="list-group-item" href="http://rometools.github.io/rome">
+            <img class="pull-right" height="40px" src="http://rometools.github.io/rome/images/romelogo.png">
+            <h4 class="list-group-item-heading">The ROME library</h4>
+            <p class="list-group-item-text">
+                ROME is a set of RSS and Atom Utilities for Java that is open source under the Apache 2.0 license.
+            </p>
+        </a>
+        <a class="list-group-item" href="http://getbootstrap.com">
+            <img class="pull-right" height="40px" src="http://thesiteslinger.com/wp-content/uploads/2013/08/Twitter-Bootstrap-Logo.jpg">
+            <h4 class="list-group-item-heading">Twitter Bootstrap</h4>
+            <p class="list-group-item-text">
+                Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.
+            </p>
+        </a>
+        <a class="list-group-item" href="http://github.com">
+            <img class="pull-right" height="40px" src="https://github.global.ssl.fastly.net/images/modules/logos_page/Octocat.png">
+            <h4 class="list-group-item-heading">Github API</h4>
+            <p class="list-group-item-text">
+                GitHub is a web-based hosting service for software development projects that use the Git revision control system. GitHub offers both paid plans for private repositories, and free accounts for open source projects. As of May 2011, GitHub was the most popular code repository site for open source projects.
+            </p>
+        </a>
+        <a class="list-group-item" href="http://meetup.com">
+            <img class="pull-right" height="40px" src="http://img.meetup.com/img/logo_82.png">
+            <h4 class="list-group-item-heading">Meetup API</h4>
+            <p class="list-group-item-text">
+                Meetup is an online social networking portal that facilitates offline group meetings in various localities around the world. Meetup allows members to find and join groups unified by a common interest, such as politics, books, games, movies, health, pets, careers or hobbies.
+            </p>
+        </a>
+    </div>
 
 </div><!-- end container -->
 
