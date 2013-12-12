@@ -3,24 +3,31 @@
 @layout.main("Blogs", "blogs") {
 
     <div class="container">
-        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 pull-right">
-            <h4>Tags</h4>
-            <canvas id="tagCanvas" class="center-block">
+        <div id='blogs-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                    <canvas id="tagCanvas" width="255" height="255"></canvas>
+                    <div id="tagList" style="display: none;">
+                        <ul>
+                            @tags.map { pair =>
+                            <li><a href="./blogs?filter=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
 
-            </canvas>
-
-            <div id="tagList" style="display: none;">
-                <ul>
-                    @tags.map { pair =>
-                    <li><a href="./blogs?filter=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
+                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                    <h4>Recent</h4>
+                    @posts.map { post =>
+                    <div class="one-liner"><a href="#@post.title" >@post.title</a></div>
                     }
-                </ul>
+                </div>
             </div>
-
         </div>
         <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
         @posts.map { post =>
         <div class="row">
+            <a name="@post.title"></a>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><a href="@post.link" target="_blank">@post.title</a><br><small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by @post.author</small></h3>

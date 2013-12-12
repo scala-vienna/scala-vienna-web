@@ -88,3 +88,7 @@ footer {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+#blogs-sidebar {
+    padding-right: 10px;
+}
