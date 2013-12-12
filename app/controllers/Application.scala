@@ -35,15 +35,26 @@ object Application extends Controller {
 
   def blogs = Action.async { implicit request =>
     {
+      def tags(posts: List[Post]) = {
+        val cats = posts.flatMap(_.categories).groupBy(s => s).map(v => (v._1, v._2.length))
+        val max = cats.values.max
+        val norm = cats.toList.map(v => (v._1, 1 + v._2 * 4 / max))
+        norm.toList
+      }
       val p = Promise[SimpleResult]()
+      val filterOpt = request.getQueryString("filter")
+      def filter(ps: List[Post]): List[Post] = (filterOpt match {
+        case None => ps
+        case Some(filter) => ps.filter(_.categories.contains(filter))
+      }).take(10)
       Cache.getAs[List[Post]]("posts") match {
         case Some(posts) =>
-          p.success(Ok(views.html.blogs(posts)))
+          p.success(Ok(views.html.blogs(filter(posts), tags(posts))))
         case None => {
           Posts.blogPosts.map(result => {
             val posts = result.sortBy(_.publishedDate).reverse
             Cache.set("posts", posts, 300) // put result on 5 minutes in cache
-            p.success(Ok(views.html.blogs(posts)))
+            p.success(Ok(views.html.blogs(filter(posts), tags(posts))))
           })
         }
       }

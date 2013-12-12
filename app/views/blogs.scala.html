@@ -1,11 +1,11 @@
-@(posts: List[service.Post])
+@(posts: List[service.Post], tags: List[(String, Int)])
 
 @layout.main("Blogs", "blogs") {
 
     <div class="container">
-
+        <div class="col-lg-9">
         @posts.map { post =>
-        <div class="col-lg-8 col-lg-offset-2">
+        <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><a href="@post.link" target="_blank">@post.title</a><br><small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by @post.author</small></h3>
@@ -22,5 +22,50 @@
             </div>
         </div>
         }
+        </div>
+        <div class="col-lg-3">
+            <h4>Tags</h4>
+            <canvas id="tagCanvas" >
+
+            </canvas>
+
+            <div id="tagList" style="display: none;">
+            <ul>
+                @tags.map { pair =>
+                <li><a href="./blogs?filter=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
+                }
+            </ul>
+            </div>
+
+        </div>
     </div>
+    <script>
+        window.onload = function() {
+            TagCanvas.textFont = 'Trebuchet MS, Helvetica, sans-serif';
+            TagCanvas.textColour = '#00f';
+            TagCanvas.textHeight = 25;
+            TagCanvas.outlineColour = '#ff9999';
+            TagCanvas.maxSpeed = 0.03;
+            TagCanvas.minBrightness = 0.2;
+            TagCanvas.depth = 0.92;
+            TagCanvas.pulsateTo = 0.6;
+            TagCanvas.initial = [0,0.2];
+            //TagCanvas.lock = 'x';
+            TagCanvas.decel = 0.98;
+            TagCanvas.reverse = true;
+            TagCanvas.hideTags = false;
+            TagCanvas.outlineMethod = 'colour';
+            TagCanvas.shadow = '#ccf';
+            TagCanvas.shadowBlur = 3;
+            TagCanvas.weight = true;
+            TagCanvas.weightMode = 'both';
+            TagCanvas.weightFrom = 'data-weight';
+            TagCanvas.weightSize = 10.0;
+            TagCanvas.wheelZoom = false;
+            TagCanvas.imageScale = null;
+            TagCanvas.fadeIn = 1000;
+            //TagCanvas.shape = 'hring';
+            TagCanvas.Start('tagCanvas', 'tagList');
+        }
+    </script>
 }
