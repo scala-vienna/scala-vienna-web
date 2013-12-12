@@ -3,7 +3,22 @@
 @layout.main("Blogs", "blogs") {
 
     <div class="container">
-        <div class="col-lg-9">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 pull-right">
+            <h4>Tags</h4>
+            <canvas id="tagCanvas" class="center-block">
+
+            </canvas>
+
+            <div id="tagList" style="display: none;">
+                <ul>
+                    @tags.map { pair =>
+                    <li><a href="./blogs?filter=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
         @posts.map { post =>
         <div class="row">
             <div class="panel panel-default">
@@ -22,21 +37,6 @@
             </div>
         </div>
         }
-        </div>
-        <div class="col-lg-3">
-            <h4>Tags</h4>
-            <canvas id="tagCanvas" >
-
-            </canvas>
-
-            <div id="tagList" style="display: none;">
-            <ul>
-                @tags.map { pair =>
-                <li><a href="./blogs?filter=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
-                }
-            </ul>
-            </div>
-
         </div>
     </div>
     <script>
