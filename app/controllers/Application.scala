@@ -7,6 +7,9 @@ import play.api.cache.Cache
 import scala.concurrent.{ Future, Promise }
 import play.api.Play.current
 import service.Github
+import service.Talk
+import service.Talks
+import org.joda.time.LocalDate
 
 object Application extends Controller {
 
@@ -26,7 +29,11 @@ object Application extends Controller {
   }
 
   def talks = Action {
-    Ok(views.html.talks())
+    Ok(views.html.talks(Talks.fetchAll))
+  }
+
+  def talk(year: Int, month: Int, day: Int, slug: String) = Action {
+    Ok(views.html.talk(Talks.fetch(new LocalDate(year, month, day), slug)))
   }
 
   def group = Action {

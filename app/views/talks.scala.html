@@ -1,11 +1,15 @@
+@(talks: Seq[service.Talk])
 @layout.main("Talks", "talks") {
 
 <div class="container">
 
     <h1>Our talks...</h1>
-
-    <p>Lorem impsum...</p>
-
-</div><!-- end container -->
+	@for(talk <- talks) {
+    	<h3>
+    		<a href="@routes.Application.talk(talk.date.getYear(), talk.date.getMonthOfYear(), talk.date.getDayOfMonth(), talk.slug)">@talk.title</a>
+    	</h3>
+    	<p>@talk.teaser</p>
+    }
+</div>
 
 }

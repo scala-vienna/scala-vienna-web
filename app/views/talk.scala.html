@@ -1,0 +1,29 @@
+@(talk: Option[service.Talk])
+@layout.main("Talks", "talks") {
+
+<div class="container">
+@if(talk.isEmpty) {
+	<div class="alert alert-warning">Sorry didn't find this one!</div>
+} else {
+   	<h3>@talk.get.title</h3>
+   	<p>Author @talk.get.author</p>
+   	@if(talk.get.twitter.isDefined){
+   	<p>Twitter <a href="https://twitter.com/@talk.get.twitter">@@@talk.get.twitter</a></p>
+   	}
+   	@if(talk.get.meetup.isDefined){
+   	<p>Meetup  <a href="http://www.meetup.com/scala-vienna/members/@talk.get.meetup">Link</a></p>
+   	}
+   	@if(talk.get.code.isDefined){
+   	<p>Code <a href="@talk.get.code">@talk.get.code</a></p>
+   	}
+   	@if(talk.get.slides.isDefined){
+   	<p>Slides @talk.get.slides</p>
+   	}
+   	@if(talk.get.video.isDefined){
+   	<p>Video @talk.get.video</p>
+   	}
+   	<p>@talk.get.content</p>
+}
+   	<p><a href="@routes.Application.talks">Back to all talks</a></p>
+</div>
+}

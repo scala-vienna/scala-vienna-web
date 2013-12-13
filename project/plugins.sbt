@@ -10,3 +10,6 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.2.1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.2.0")
 
 addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.7")
+
+// Eclipse project generator
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.4.0")

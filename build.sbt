@@ -7,7 +7,8 @@ libraryDependencies ++= Seq(
     "org.webjars" %% "webjars-play" % "2.2.1",
     "org.webjars" % "bootstrap" % "3.0.2",
     "org.webjars" % "holderjs" % "2.1.0",
-    "rome" % "rome" % "1.0"
+    "rome" % "rome" % "1.0",
+    "org.pegdown" % "pegdown" % "1.4.2"
 )
 
 play.Project.playScalaSettings
@@ -18,4 +19,7 @@ scalariformSettings
 
 com.jamesward.play.BrowserNotifierPlugin.livereload
 
+// sbteclipse settings
+EclipseKeys.executionEnvironment := Some(EclipseExecutionEnvironment.JavaSE17)
 
+EclipseKeys.withSource := true
