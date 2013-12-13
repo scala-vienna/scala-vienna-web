@@ -5,7 +5,7 @@
 # Home page
 GET   /                                controllers.Application.index
 GET   /photos                          controllers.Application.photos
-GET   /talks                           controllers.Application.talks
+GET   /talks                           controllers.Application.talks(tag: Option[String] ?= None, speaker: Option[String] ?= None)
 GET   /talks/:year/:month/:day/:slug   controllers.Application.talk(year:Int,month:Int,day:Int,slug:String)
 # GET     /group                      controllers.Application.group
 GET   /blogs                           controllers.Application.blogs

@@ -28,12 +28,14 @@ object Application extends Controller {
     }
   }
 
-  def talks = Action {
-    Ok(views.html.talks(Talks.fetchAll))
+  def talks(tag: Option[String] = None, speaker: Option[String] = None) = Action { implicit request =>
+    val talkInfos = Talks.fetchList(tag, speaker)
+    Ok(views.html.talks(talkInfos.talks, talkInfos.speakers, talkInfos.tags, tag, speaker))
   }
 
   def talk(year: Int, month: Int, day: Int, slug: String) = Action {
-    Ok(views.html.talk(Talks.fetch(new LocalDate(year, month, day), slug)))
+    val talkInfos = Talks.fetchSingle(new LocalDate(year, month, day), slug)
+    Ok(views.html.talk(talkInfos.talks.headOption, talkInfos.speakers, talkInfos.tags))
   }
 
   def group = Action {

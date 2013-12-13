@@ -1,29 +1,48 @@
-@(talk: Option[service.Talk])
+@(talk: Option[service.Talk], speakers:Seq[String], tags:Seq[String])
 @layout.main("Talks", "talks") {
 
 <div class="container">
-@if(talk.isEmpty) {
-	<div class="alert alert-warning">Sorry didn't find this one!</div>
-} else {
-   	<h3>@talk.get.title</h3>
-   	<p>Author @talk.get.author</p>
-   	@if(talk.get.twitter.isDefined){
-   	<p>Twitter <a href="https://twitter.com/@talk.get.twitter">@@@talk.get.twitter</a></p>
-   	}
-   	@if(talk.get.meetup.isDefined){
-   	<p>Meetup  <a href="http://www.meetup.com/scala-vienna/members/@talk.get.meetup">Link</a></p>
-   	}
-   	@if(talk.get.code.isDefined){
-   	<p>Code <a href="@talk.get.code">@talk.get.code</a></p>
-   	}
-   	@if(talk.get.slides.isDefined){
-   	<p>Slides @talk.get.slides</p>
-   	}
-   	@if(talk.get.video.isDefined){
-   	<p>Video @talk.get.video</p>
-   	}
-   	<p>@talk.get.content</p>
-}
-   	<p><a href="@routes.Application.talks">Back to all talks</a></p>
+	<div id='talks-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+    	<h4>Speakers</h4>
+    	@for(speaker <- speakers) { 
+    		<a href="@routes.Application.talks(speaker=Some(speaker))" title="Filter" class="label label-info">@speaker</a> 
+    	}
+    	<h4>Tags</h4>
+    	@for(tag <- tags) { 
+    		<a href="@routes.Application.talks(tag=Some(tag))" title="Filter" class="badge">@tag</a> 
+    	}
+    </div>
+	<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+		<div class="row">
+		@if(talk.isEmpty) {
+			<div class="alert alert-warning">Sorry didn't find this one!</div>
+		} else {
+		   	<h3>@talk.get.title</h3>
+		   	<div class="well well-sm">
+			   	<p>Author @talk.get.speaker</p>
+			   	@talk.get.twitter.map { twitter =>
+			   	<p>Twitter <a href="https://twitter.com/@twitter">@@@twitter</a></p>
+			   	}
+			   	@talk.get.meetup.map{ meetup =>
+			   	<p>Meetup  <a href="http://www.meetup.com/scala-vienna/members/@meetup">Link</a></p>
+			   	}
+			   	@talk.get.code.map { code =>
+			   	<p>Code <a href="@code">@code</a></p>
+			   	}
+				@talk.get.video.map { video => 
+				<a href="@video" title="Video of the talk" target="_blank"><span class="glyphicon glyphicon-film"></span></a>
+				}
+				@talk.get.slides.map { slides => 
+				<p>
+					<a href="@slides" title="Slides of the talk" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
+					<a href="@slides" target="_blank">@slides</a>
+				</p>
+				}
+			</div>
+		   	<p>@talk.get.content</p>
+		}
+	    </div>
+		<p><a href="@routes.Application.talks()">Back to all talks</a></p>
+	</div>
 </div>
 }
