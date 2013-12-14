@@ -14,15 +14,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">Vienna Scala User Group</a>
+                    <a class="navbar-brand" href="@routes.Application.index()">Vienna Scala User Group</a>
                 </div>
                 <div id="main-navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a @if(page == "start") {class="active"} href="@routes.Application.index()">Start</a></li>
                         <li><a @if(page == "talks") {class="active"} href="@routes.Application.talks()">Talks</a></li>
                         <li><a @if(page == "group") {class="active"} href="@routes.Application.blogs()">Blogs</a></li>
-                        <li><a @if(page == "photos") {class="active"} href="@routes.Application.photos()">Photostream</a></li>
-                        <li><a @if(page == "group") {class="active"} href="https://groups.google.com/forum/?hl=en#!forum/scala-vienna" target="_blank">Google Group</a></li>
+                        <li><a @if(page == "photos") {class="active"} href="@routes.Application.photos()">Photos</a></li>
+                        <li><a @if(page == "group") {class="active"} href="https://groups.google.com/forum/?hl=en#!forum/scala-vienna" target="_blank">Mailing List</a></li>
                         <li><a @if(page == "about") {class="active"} href="@routes.Application.about()">About</a></li>
                     </ul>
                 </div>

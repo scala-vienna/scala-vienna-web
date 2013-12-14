@@ -1,11 +1,16 @@
 
 /** main background image */
 .splash {
-    height: 600px;
-    background-image: url('/assets/images/vienna-riesen-rad.jpg');
+    height: 500px;
+    background-image: url('/assets/images/vienna-big-wheel.jpg');
+    background-position: 50% 50%;
     background-size: cover;
     width: auto;
     margin-top: -91px;
+}
+
+.splash img {
+    margin-top: 50px;
 }
 
 /** offset splash container from navbar */
@@ -18,7 +23,10 @@
 }
 
 .splash h1 {
-    font-size: 2em;
+    font-size: 2.4em;
+    color: #98141b;
+    margin-top: 80px;
+    margin-left: 20px;
 }
 
 #google-groups {
