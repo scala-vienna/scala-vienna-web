@@ -41,7 +41,7 @@ case class Talk(
 case class Talks(talks: Seq[Talk], speakers: Seq[String], tags: Seq[String])
 
 object Talks {
-  val talksDirectory = "talks"
+  val talksDirectory = "public/talks"
   private val filenameRegex = """(20\d{6})_([^.]+)\.(md|markdown)""".r
   private val dateFormat = DateTimeFormat.forPattern("YYYYMMdd")
 
