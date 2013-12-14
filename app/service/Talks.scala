@@ -94,6 +94,7 @@ object Talks {
       case Some(talks) => talks
       case None => {
         val files = try {
+          debug("Application path is: " + Play.application.path.getName)
           val dir = Play.getFile(talksDirectory)
           if (dir != null && dir.exists() && dir.isDirectory()) {
             dir.listFiles()
