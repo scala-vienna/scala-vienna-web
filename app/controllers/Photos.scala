@@ -47,7 +47,7 @@ object Photos {
           caption = caption,
           thumbnailUrl = thumbnail,
           // FIXME: there does not seem to be a way to access this bigger thumbnail via the API!
-          mediumUrl = thumbnail.replaceAllLiterally("thumb_", "global_"),
+          mediumUrl = medium, //thumbnail.replaceAllLiterally("thumb_", "global_"),
           highresUrl = highres
         )
       }

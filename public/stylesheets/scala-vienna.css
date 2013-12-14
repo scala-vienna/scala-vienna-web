@@ -92,3 +92,16 @@ footer {
 #blogs-sidebar {
     padding-right: 10px;
 }
+
+@media (min-width: 1024px) {
+    .table{
+        display: table;
+        vertical-align: middle;
+    }
+
+    .table-cell{
+        display: table-cell;
+        vertical-align: middle;
+        float: none;
+    }
+}

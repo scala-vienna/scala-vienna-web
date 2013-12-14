@@ -16,9 +16,13 @@ object Application extends Controller {
   def index = Action.async { implicit request =>
     {
       for {
+        photos <- Photos.findAll
         upcoming <- Meetup.retrieveEvents("upcoming")
         past <- Meetup.retrieveEvents("past")
-      } yield Ok(views.html.index(upcoming, past.reverse))
+      } yield {
+        val randomPhotos = scala.util.Random.shuffle(photos).slice(0, 4).toList
+        Ok(views.html.index(upcoming, past.reverse, randomPhotos))
+      }
     }
   }
 

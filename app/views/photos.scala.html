@@ -1,14 +1,14 @@
 @(photos: Seq[Photo])
 
-@layout.main("Stream[Photo]", "photos") {
+@layout.main("Photostream", "photos") {
 
     <div class="container photos">
-        @photos.grouped(6).map { photoGroup =>
+        @photos.grouped(4).map { photoGroup =>
         <div class="row">
             @photoGroup.map { photo =>
-                <div class="col-lg-2">
-                    <a href="@photo.highresUrl" class="with-caption image-link thumbnail" title="@photo.caption">
-                        <img class="img-rounded img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
+                <div class="col-lg-3 col-md-3 col-xs-12 thumb table-cell">
+                    <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
+                        <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
                     </a>
                 </div>
             }

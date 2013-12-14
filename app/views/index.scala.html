@@ -1,4 +1,4 @@
-@(upcomingEvents: Seq[MeetupEvent], pastEvents: Seq[MeetupEvent])
+@(upcomingEvents: Seq[MeetupEvent], pastEvents: Seq[MeetupEvent], photos: Seq[Photo])
 
 @layout.main("Start", "start") {
 
@@ -20,26 +20,15 @@
     <br/>
     <br/>
 
-    <div class="row">
-        <div class="col-lg-2">
-            <img class="img-rounded" data-src="holder.js/250x200" alt="Generic placeholder image">
-        </div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-2">
-            <img class="img-rounded" data-src="holder.js/250x200" alt="Generic placeholder image">
-        </div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-2">
-            <img class="img-rounded" data-src="holder.js/250x200" alt="Generic placeholder image">
-        </div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-2">
-            <img class="img-rounded" data-src="holder.js/250x200" alt="Generic placeholder image">
-        </div>
+    <div class="row table">
+        @photos.map { photo =>
+            <div class="col-lg-3 col-md-3 col-xs-12 thumb table-cell">
+                <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
+                    <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
+                </a>
+            </div>
+        }
     </div>
-
-    <br/>
-    <br/>
 
     <div class="row events">
         <div class="col-md-8">
@@ -156,6 +145,9 @@
     $(document).ready(function() {
         $('.event-description' ).dotdotdot({
             after: 'a.readMore'
-        })
+        });
+
+        // Photo zoom
+        $('.image-link').magnificPopup({type:'image'});
     })
 </script>
