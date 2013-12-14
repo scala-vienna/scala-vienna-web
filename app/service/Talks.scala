@@ -113,7 +113,7 @@ object Talks {
         val dataSorted = data.sorted(TalkOrdering)
         val talks = Talks(dataSorted, speakers, tags)
         // TODO set useful timeout for production
-        Cache.set("talks", talks, 30)
+        // TODO: remove from Cache while debugging Heroku issue: Cache.set("talks", talks, 30)
         talks
       }
     }
