@@ -41,7 +41,7 @@ case class Talk(
 case class Talks(talks: Seq[Talk], speakers: Seq[String], tags: Seq[String])
 
 object Talks {
-  val talksDirectory = "public/talks"
+  val talksDirectory = "conf/talks"
   private val filenameRegex = """(20\d{6})_([^.]+)\.(md|markdown)""".r
   private val dateFormat = DateTimeFormat.forPattern("YYYYMMdd")
 
@@ -94,7 +94,7 @@ object Talks {
       case Some(talks) => talks
       case None => {
         val files = try {
-          debug("Application path is: " + Play.application.path.getName)
+          debug("Application path is: " + Play.application.path.getAbsolutePath)
           val dir = Play.getFile(talksDirectory)
           if (dir != null && dir.exists() && dir.isDirectory()) {
             dir.listFiles()
@@ -113,7 +113,7 @@ object Talks {
         val dataSorted = data.sorted(TalkOrdering)
         val talks = Talks(dataSorted, speakers, tags)
         // TODO set useful timeout for production
-        // TODO: remove from Cache while debugging Heroku issue: Cache.set("talks", talks, 30)
+        Cache.set("talks", talks, 30)
         talks
       }
     }
