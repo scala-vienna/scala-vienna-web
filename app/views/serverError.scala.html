@@ -1,0 +1,8 @@
+@(throwable: Throwable)
+@layout.main("500 - Internal Server Error", "start") {
+    <div class="container">
+      <div class="page-header"><h1>500 - Internal Server Error <small>Ouch! That hurt!</small></h1></div>
+
+      <pre>@throwable.getMessage</pre>
+    </div>
+}
