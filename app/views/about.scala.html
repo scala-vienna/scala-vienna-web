@@ -5,8 +5,21 @@
 <div class="container">
 
     <h1>About the <small>Vienna Scala User Group</small></h1>
+    <div class="row">
 
-    <h2>Contributors</h2>
+        <p>We are a bunch of software developers interested in discovering Scala, learning about new techniques and frameworks and meeting other Scala developers in the Vienna area. Our aim is to meet regularly in 4 week cycles and share knowledge and experiences about the Scala programming language and its ecosystem.</p>
+
+        <p>We our Google group for communication, so make sure you subscribe to it to be informed: <a href="http://groups.google.com/group/scala-vienna">http://groups.google.com/group/scala-vienna</a></p>
+
+        <p>We post our code to: <a href="https://github.com/scala-vienna">https://github.com/scala-vienna</a>.</p>
+
+        <p>We are on Twitter as <a href="https://twitter.com/scalavienna">@@ScalaVienna</a>, we use hashtags #scala #vienna.</p>
+
+        <p>We are part of a worldwide network of Scala meetups: <a href="http://scala.meetup.com">http://scala.meetup.com</a></p>
+
+        <p>Developers from all skill levels eager to learn more about this great language are welcome! Come on and join us!</p>
+    </div>
+    <h2>Contributors <small>to this web applicaiton</small></h2>
     @contributors.flatten.grouped(4).map { group =>
     <div class="row">
     @group.map { contributor =>
@@ -50,7 +63,7 @@
     }
     </div>
     }
-    <h2>Technologies</h2>
+    <h2>Technologies <small>used in this web applicaiton</small></h2>
     <div class="list-group">
         <a class="list-group-item" href="http://scala-lang.org">
             <img class="pull-right" height="40px" src="http://scala-lang.org/resources/img/smooth-spiral.png">
