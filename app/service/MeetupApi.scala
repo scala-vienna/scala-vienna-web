@@ -8,6 +8,7 @@ import play.api.libs.json.JsValue
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.cache.Cache
 import scala.concurrent.duration._
+import scala.language.postfixOps
 
 /**
  * Generic Meetup API

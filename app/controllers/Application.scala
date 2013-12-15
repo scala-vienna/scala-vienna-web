@@ -71,19 +71,27 @@ object Application extends Controller {
         norm.toList
       }
       val p = Promise[SimpleResult]()
-      val filterOpt = request.getQueryString("filter")
-      def filter(ps: List[Post]): List[Post] = (filterOpt match {
-        case None => ps
-        case Some(filter) => ps.filter(_.categories.contains(filter))
-      }).take(10)
+      val tagOpt = request.getQueryString("tag")
+      val authorOpt = request.getQueryString("author")
+
+      def filter(ps: List[Post]): List[Post] =
+        ps.filter(
+          p => tagOpt match {
+            case None => true
+            case Some(cat) => p.categories.contains(cat)
+          }
+        ).filter(p => p.author == authorOpt.getOrElse(p.author)).take(10)
+
+      val title = "Posts" + authorOpt.map(" of " + _).getOrElse("") + tagOpt.map(" by tag #" + _).getOrElse("")
+
       Cache.getAs[List[Post]]("posts") match {
         case Some(posts) =>
-          p.success(Ok(views.html.blogs(filter(posts), tags(posts))))
+          p.success(Ok(views.html.blogs(title, filter(posts), tags(posts), posts.map(_.author).distinct)))
         case None => {
           Posts.blogPosts.map(result => {
             val posts = result.sortBy(_.publishedDate).reverse
             Cache.set("posts", posts, 300) // put result on 5 minutes in cache
-            p.success(Ok(views.html.blogs(filter(posts), tags(posts))))
+            p.success(Ok(views.html.blogs(title, filter(posts), tags(posts), posts.map(_.author).distinct)))
           })
         }
       }
