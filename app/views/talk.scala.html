@@ -58,30 +58,30 @@
 			   		<div class="panel-heading">Talk</div>
 					<div class="panel-body">
 						<table class="table">
-					   	@talk.get.meetupEventId.map { meetupEventId =>
-					   		<tr>
-					   			<td>Meetup Event</td>
-					   			<td><a href="http://www.meetup.com/scala-vienna/events/@meetupEventId" target="_blank">http://www.meetup.com/scala-vienna/events/@meetupEventId</a></td>
-					   		</tr>
-					   	}
 					   	@talk.get.code.map { code =>
 					   		<tr>
 							   	<td>Code</td>
 							   	<td><a href="@code" target="_blank">@code</a></td>
 							</tr>
 					   	}
-						@talk.get.video.map { video =>
-							<tr> 
-								<td>Video</td>
-								<td><a href="@video" title="Video of the talk" target="_blank">@video</span></a></td>
-							</tr>
-						}
 						@talk.get.slides.map { slides =>
 							<tr> 
 								<td>Slides</td>
 								<td><a href="@slides" title="Slides of the talk" target="_blank">@slides</a></td>
 							</tr>
 						}
+						@talk.get.video.map { video =>
+							<tr> 
+								<td>Video</td>
+								<td><a href="@video" title="Video of the talk" target="_blank">@video</span></a></td>
+							</tr>
+						}
+					   	@talk.get.meetupEventId.map { meetupEventId =>
+					   		<tr>
+					   			<td>Meetup Event</td>
+					   			<td><a href="http://www.meetup.com/scala-vienna/events/@meetupEventId" target="_blank">http://www.meetup.com/scala-vienna/events/@meetupEventId</a></td>
+					   		</tr>
+					   	}
 						</table>
 					</div>
 				</div>
@@ -89,6 +89,7 @@
 		</div>
 		<div class="row">
 		   	@talk.get.content
+		   	@if(!photos.isEmpty) {
 			<hr/>
             <div class="row table">
             @photos.map { photo =>
@@ -99,6 +100,7 @@
                 </div>
             }
             </div>
+            }
 			<hr/>
 			<a href="@routes.Application.talks()">Back to all talks</a>
 			}
