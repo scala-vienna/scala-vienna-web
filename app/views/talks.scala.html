@@ -1,39 +1,67 @@
-@(talks: Seq[service.Talk], speakers:Seq[String], tags:Seq[String],tagFilter:Option[String],speakerFilter:Option[String])
+@(talks: Seq[service.Talk], page:Int, pages:Int, speakers:Seq[String], tags:Seq[String], dates:Seq[String], tagFilter:Option[String], speakerFilter:Option[String], dateFilter:Option[String])
+@import service.Talks.dateUIFormat
 @layout.main("Talks", "talks") {
 
 <div class="container">
+	<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+		<div class="row">
+		@if(pages > 1) {
+			<ul class="pagination">
+	  			<li @if(page == 1) { class="disabled" }><a href="@routes.Application.talks(page=page-1, tag=tagFilter,speaker=speakerFilter)">&laquo;</a></li>
+				@for(currPage <- 1 to pages){
+					<li @if(page == currPage) { class="active" }>
+						<a href="@routes.Application.talks(page=currPage, tag=tagFilter,speaker=speakerFilter)">@currPage</a>
+					</li>
+				}
+				<li @if(page == pages) { class="disabled" }><a href="@routes.Application.talks(page=page+1, tag=tagFilter,speaker=speakerFilter)">&raquo;</a></li>
+			</ul>
+		}
+		</div>
+	</div>	
+
 	<div id='talks-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-		@if(tagFilter.isDefined || speakerFilter.isDefined) {
-	    	<h4>Filter</h4>
+		@if(tagFilter.isDefined || speakerFilter.isDefined || dateFilter.isDefined) {
+	    	<strong><em>Filter</em></strong><br/>
 			@tagFilter.map{ tagFilter => 
 			<a href="@routes.Application.talks()" title="Remove Filter" class="badge glyphicon glyphicon-remove"> @tagFilter</a> 
 			} 
 			@speakerFilter.map{ speakerFilter => 
 			<a href="@routes.Application.talks()" title="Remove Filter" class="label label-info glyphicon glyphicon-remove"> @speakerFilter</a> 
 			} 
+			@dateFilter.map{ dateFilter => 
+			<a href="@routes.Application.talks()" title="Remove Filter" class="label label-success glyphicon glyphicon-remove"> @dateFilter</a> 
+			} 
+			<hr/>
 		}
-    	<h4>Speakers</h4>
+    	<strong><em>Speakers</em></strong><br/>
     	@for(speaker <- speakers) { 
     		<a href="@routes.Application.talks(speaker=Some(speaker))" title="Filter" class="label label-info">@speaker</a> 
     	}
-    	<h4>Tags</h4>
+    	<hr/>
+    	<strong><em>Tags</em></strong><br/>
     	@for(tag <- tags) { 
     		<a href="@routes.Application.talks(tag=Some(tag))" title="Filter" class="badge">@tag</a> 
     	}
+    	<hr/>
+    	<strong><em>Events</em></strong><br/>
+    	@for(date <- dates) { 
+    		<a href="@routes.Application.talks(date=Some(date))" title="Filter" class="label label-success">@date</a> 
+    	}
     </div>
 	<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
-	@for(talk <- talks) {
+		@for(talk <- talks) {
 		<div class="row well well-sm">
 	    	<h4>
 	    		<a href="@routes.Application.talk(talk.date.getYear(), talk.date.getMonthOfYear(), talk.date.getDayOfMonth(), talk.slug)">@talk.title</a>
 	    	</h4>
 	    	<p>
 	    		<a href="@routes.Application.talks(speaker=Some(talk.speaker))" title="Filter" class="label label-info">@talk.speaker</a>
-			   	<span class="label label-success">@talk.date</span>
+			   	<a href="@routes.Application.talks(date=Some(dateUIFormat.print(talk.date)))" title="Filter" class="label label-success">@dateUIFormat.print(talk.date)</a>
 		   	</p>
 			@talk.code.map { code => <a href="@code" title="Code" target="_blank"><span class="glyphicon glyphicon-floppy-disk"></a> }
-			@talk.slides.map { slides => <a href="@slides" title="Slides of the talk" target="_blank"><span class="glyphicon glyphicon-file"></span></a>}
-			@talk.video.map { video => <a href="@video" title="Video of the talk" target="_blank"><span class="glyphicon glyphicon-film"></span></a>}
+			@talk.slides.map { slides => <a href="@slides" title="Slides" target="_blank"><span class="glyphicon glyphicon-file"></span></a>}
+			@talk.video.map { video => <a href="@video" title="Video" target="_blank"><span class="glyphicon glyphicon-film"></span></a>}
 	    	<p>@talk.teaser</p>
 	    	<p>
 	    	@for(tag <- talk.tags) {
@@ -41,7 +69,20 @@
 	    	}
 	    	</p>
     	</div>
-    }
+    	}
+	    <div class="row">
+		@if(pages > 1) {
+			<ul class="pagination">
+	  			<li @if(page == 1) { class="disabled" }><a href="@routes.Application.talks(page=page-1, tag=tagFilter,speaker=speakerFilter)">&laquo;</a></li>
+				@for(currPage <- 1 to pages){
+					<li @if(page == currPage) { class="active" }>
+						<a href="@routes.Application.talks(page=currPage, tag=tagFilter,speaker=speakerFilter)">@currPage</a>
+					</li>
+				}
+				<li @if(page == pages) { class="disabled" }><a href="@routes.Application.talks(page=page+1, tag=tagFilter,speaker=speakerFilter)">&raquo;</a></li>
+			</ul>
+		}
+		</div>
     </div>
 </div>
 

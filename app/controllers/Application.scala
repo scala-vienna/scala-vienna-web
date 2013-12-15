@@ -10,6 +10,7 @@ import service.Github
 import service.Talk
 import service.Talks
 import org.joda.time.LocalDate
+import scala.util.Try
 
 object Application extends Controller {
 
@@ -32,14 +33,18 @@ object Application extends Controller {
     }
   }
 
-  def talks(tag: Option[String] = None, speaker: Option[String] = None) = Action { implicit request =>
-    val talkInfos = Talks.fetchList(tag, speaker)
-    Ok(views.html.talks(talkInfos.talks, talkInfos.speakers, talkInfos.tags, tag, speaker))
+  def talks(page: Int, tagFilter: Option[String] = None, speakerFilter: Option[String] = None, dateFilter: Option[String] = None) = Action { implicit request =>
+    val jodaDate: Option[LocalDate] = dateFilter match {
+      case Some(date) => Try { Talks.dateUIFormat.parseLocalDate(date) }.toOption
+      case _ => None
+    }
+    val talks = Talks.fetchPaginated(page, tagFilter, speakerFilter, jodaDate)
+    Ok(views.html.talks(talks.talks, talks.page, talks.pages, talks.speakers, talks.tags, talks.dates, tagFilter, speakerFilter, dateFilter))
   }
 
   def talk(year: Int, month: Int, day: Int, slug: String) = Action {
     val talkInfos = Talks.fetchSingle(new LocalDate(year, month, day), slug)
-    Ok(views.html.talk(talkInfos.talks.headOption, talkInfos.speakers, talkInfos.tags))
+    Ok(views.html.talk(talkInfos.talks.headOption, talkInfos.speakers, talkInfos.tags, talkInfos.dates))
   }
 
   def group = Action {

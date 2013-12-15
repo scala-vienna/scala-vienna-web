@@ -1,8 +1,9 @@
 ---
 title = Tips and tricks for setting up a Play 2 project
 speaker = Manuel Bernhardt
-twitter = codecopkofler
-meetup = 67741712
+twitter = elmanu
+meetupEventId = 120994612
+meetupMemberId = 67741712
 homepage = "http://manuel.bernhardt.io"
 slides = "http://de.slideshare.net/ManuelBernhardt/tips-and-tricks-for-setting-up-a-play-2-project"
 code = "https://github.com/manuelbernhardt/hello-play-dv13"

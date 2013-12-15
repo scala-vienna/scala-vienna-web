@@ -2,7 +2,8 @@
 title = "Scala to JavaScript - Part I"
 speaker = Sebastian Nozzi
 twitter = sebnozzi
-meetup = 69371392
+meetupEventId = 120994262
+meetupMemberId = 69371392
 homepage = "http://www.sebnozzi.com/"
 tags = "Scala,Scala.js,JScala,JavaScript"
 ---

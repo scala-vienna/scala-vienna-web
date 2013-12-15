@@ -1,7 +1,8 @@
 ---
 title = Scalaz introduction
 speaker = Bernhard Huemer
-meetup = 11605836
+meetupEventId = 120994612
+meetupMemberId = 11605836
 tags = "Scala,Scalaz,Functional Programming"
 code = "https://gist.github.com/bhuemer/7577732"
 video = "http://www.youtube.com/watch?v=V5P3qgf29Dg"

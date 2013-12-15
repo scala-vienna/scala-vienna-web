@@ -13,7 +13,8 @@ import org.pegdown.PegDownProcessor
 
 import com.typesafe.config.ConfigFactory
 
-import play.api.Logger._
+import play.api.Logger.debug
+import play.api.Logger.warn
 import play.api.Play
 import play.api.Play.current
 import play.api.cache.Cache
@@ -26,7 +27,8 @@ case class Talk(
   title: String,
   speaker: String,
   // social
-  meetup: Option[String],
+  meetupEventId: Option[String],
+  meetupMemberId: Option[String],
   twitter: Option[String],
   homepage: Option[String],
   // presentation
@@ -38,12 +40,19 @@ case class Talk(
   content: Html,
   tags: Set[String])
 
-case class Talks(talks: Seq[Talk], speakers: Seq[String], tags: Seq[String])
+case class Talks(talks: Vector[Talk], speakers: Seq[String], tags: Seq[String], dates: Seq[String])
+case class TalksUI(talks: Vector[Talk], page: Int, pages: Int, speakers: Seq[String], tags: Seq[String], dates: Seq[String])
 
 object Talks {
-  val talksDirectory = "conf/talks"
+  val dateUIFormat = DateTimeFormat.forPattern("YYYY-MM-dd")
+
+  private val talksDirectory = "conf/talks"
+  private val pageSize = 5
   private val filenameRegex = """(20\d{6})_([^.]+)\.(md|markdown)""".r
-  private val dateFormat = DateTimeFormat.forPattern("YYYYMMdd")
+  private val dateMDFormat = DateTimeFormat.forPattern("YYYYMMdd")
+
+  // not thread-safe but only used sequentially
+  val pegDownProcessor = new PegDownProcessor()
 
   // Sort talks descending by date and ascending by slug
   private object TalkOrdering extends Ordering[Talk] {
@@ -55,7 +64,7 @@ object Talks {
   }
 
   private def parseTalk(file: File): Talk = {
-    debug("Parsing talk " + file)
+    debug("Parsing talk " + file.getName())
     def separateHeaderContent = {
       val lines = Source.fromFile(file)(Codec.UTF8).getLines
       // drop header ---
@@ -65,13 +74,14 @@ object Talks {
       (properties, lines.toSeq)
     }
     val filenameRegex(dateString, slug, _) = file.getName
-    val date = dateFormat.parseLocalDate(dateString)
+    val date = dateMDFormat.parseLocalDate(dateString)
     val (properties, contentLines) = separateHeaderContent
     // basic
     val title = properties.getString("title")
     val speaker = properties.getString("speaker")
     // social
-    val meetup = Try(properties.getString("meetup")).toOption
+    val meetupEventId = Try(properties.getString("meetupEventId")).toOption
+    val meetupMemberId = Try(properties.getString("meetupMemberId")).toOption
     val twitter = Try(properties.getString("twitter")).toOption
     val homepage = Try(properties.getString("homepage")).toOption
     // presentation
@@ -84,13 +94,22 @@ object Talks {
     val tags = Try(properties.getString("tags").split(",").toSet).toOption.getOrElse(Set.empty)
 
     Talk(date = date, slug = slug, title = title, speaker = speaker,
-      meetup = meetup, twitter = twitter, homepage = homepage,
+      meetupEventId = meetupEventId, meetupMemberId = meetupMemberId, twitter = twitter, homepage = homepage,
       code = code, slides = slides, video = video,
       teaser = teaser, content = content, tags = tags)
   }
 
-  def fetchList(tag: Option[String] = None, speaker: Option[String] = None): Talks = {
+  def fetchPaginated(page: Int = 1, tag: Option[String] = None, speaker: Option[String] = None, date: Option[LocalDate] = None): TalksUI = {
+    val all = fetchList(tag, speaker, date)
+    val start = (page - 1) * pageSize
+    val paginatedTalks = all.talks.slice(start, start + pageSize)
+    val pages = Math.ceil(all.talks.size / pageSize.toDouble).toInt
+    TalksUI(talks = paginatedTalks, page = page, pages = pages, speakers = all.speakers, tags = all.tags, dates = all.dates)
+  }
+
+  private def fetchList(tag: Option[String] = None, speaker: Option[String] = None, date: Option[LocalDate] = None): Talks = {
     val talks = Cache.getAs[Talks]("talks") match {
+      // all talks
       case Some(talks) => talks
       case None => {
         val files = try {
@@ -108,19 +127,22 @@ object Talks {
             Array.empty[File]
         }
         val data = files.map(parseTalk)
-        val speakers = data.map(_.speaker).distinct
-        val tags = data.map(_.tags).flatten.distinct
-        val dataSorted = data.sorted(TalkOrdering)
-        val talks = Talks(dataSorted, speakers, tags)
+        val speakers = data.map(_.speaker).toSeq.distinct.sorted
+        val tags = data.map(_.tags).flatten.toSeq.distinct.sorted
+        val dates = data.map(_.date).toSeq.distinct.map(dateUIFormat.print).sorted.reverse
+        val dataSorted = data.to[Vector].sorted(TalkOrdering)
+        val talks = Talks(dataSorted, speakers, tags, dates)
         // TODO set useful timeout for production
         Cache.set("talks", talks, 30)
         talks
       }
     }
-    (tag, speaker) match {
-      case (Some(tag), _) => talks.copy(talks = talks.talks.filter(_.tags.contains(tag)))
-      case (_, Some(speaker)) => talks.copy(talks = talks.talks.filter(_.speaker == speaker))
-      case (None, None) => talks
+    // filtered talks
+    (tag, speaker, date) match {
+      case (Some(tag), _, _) => talks.copy(talks = talks.talks.filter(_.tags.contains(tag)))
+      case (_, Some(speaker), _) => talks.copy(talks = talks.talks.filter(_.speaker == speaker))
+      case (_, _, Some(date)) => talks.copy(talks = talks.talks.filter(_.date == date))
+      case (_, _, _) => talks
     }
   }
 
@@ -129,8 +151,6 @@ object Talks {
     all.copy(talks = all.talks.filter { talk => talk.date == date && talk.slug == slug })
   }
 
-  def markdown(markdown: String): Html = {
-    Html(new PegDownProcessor().markdownToHtml(markdown))
-  }
+  private def markdown(markdown: String): Html = Html(pegDownProcessor.markdownToHtml(markdown))
 
 }
