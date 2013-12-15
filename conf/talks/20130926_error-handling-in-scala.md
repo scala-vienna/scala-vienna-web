@@ -6,6 +6,7 @@ meetupMemberId = 75377452
 tags = "Scala,Language"
 ---
 A Primer
+
 * Option
 * Either
 * Try
