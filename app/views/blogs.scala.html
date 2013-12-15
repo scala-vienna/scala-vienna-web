@@ -1,4 +1,4 @@
-@(posts: List[service.Post], tags: List[(String, Int)])
+@(title: String, posts: List[service.Post], tags: List[(String, Int)], authors: List[String])
 
 @layout.main("Blogs", "blogs") {
 
@@ -10,7 +10,7 @@
                     <div id="tagList" style="display: none;">
                         <ul>
                             @tags.map { pair =>
-                            <li><a href="./blogs?filter=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
+                            <li><a href="./blogs?tag=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
                             }
                         </ul>
                     </div>
@@ -22,28 +22,43 @@
                     <div class="one-liner"><a href="#@post.title" >@post.title</a></div>
                     }
                 </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                    <h4>
+                        Authors
+                        <small>
+                            (<a href="./blogs" >show all</a>)
+                        </small>
+                    </h4>
+                    @authors.map { author =>
+                    <div class="one-liner"><a href="./blogs?author=@author" >@author</a></div>
+                    }
+                </div>
             </div>
         </div>
         <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
-        @posts.map { post =>
-        <div class="row">
-            <a name="@post.title"></a>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><a href="@post.link" target="_blank">@post.title</a><br><small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by @post.author</small></h3>
-                </div>
-                <div class="panel-body">
-                    @Html(post.description.getOrElse(""))
-                    <div class="tags">
-                        Tags:
-                        @post.categories.map { category =>
-                            <span class="tag">#@category</span>
-                        }
+            <h2>@title</h2>
+            @posts.map { post =>
+            <div class="row">
+                <a name="@post.title"></a>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a href="@post.link" target="_blank">@post.title</a><br><small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by @post.author</small></h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html(post.description.getOrElse(""))
+                        <div class="tags">
+                            Tags:
+                            @post.categories.map { category =>
+                                <span class="tag">
+                                    <a href="./blogs?tag=@category">#@category</a>
+                                </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        }
+            }
         </div>
     </div>
     <script>
