@@ -1,4 +1,4 @@
-@(talk: Option[service.Talk], speakers:Seq[String], tags:Seq[String], dates:Seq[String])
+@(talk: Option[service.Talk], speakers:Seq[String], tags:Seq[String], dates:Seq[String], photos: Seq[service.Photo])
 @layout.main("Talks", "talks") {
 
 <div class="container">
@@ -90,9 +90,26 @@
 		<div class="row">
 		   	@talk.get.content
 			<hr/>
+            <div class="row table">
+            @photos.map { photo =>
+                <div class="col-lg-3 col-sm-3 col-xs-12 thumb table-cell">
+                    <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
+                        <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
+                    </a>
+                </div>
+            }
+            </div>
+			<hr/>
 			<a href="@routes.Application.talks()">Back to all talks</a>
 			}
 	    </div>
 	</div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.image-link').magnificPopup({type:'image'});
+    })
+</script>
+
 }

@@ -104,7 +104,6 @@ object Github {
   }
 
   def getUser(url: String): Future[Option[User]] = {
-    println(url)
     WS.url(url)
       .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
       .get().map(
@@ -114,7 +113,7 @@ object Github {
             response.json.validate[User].map({
               case user => Some(user)
             }).recoverTotal(e => {
-              println(e)
+              Logger.error("Error trying to fetch Github user", e)
               None
             })
           } else None

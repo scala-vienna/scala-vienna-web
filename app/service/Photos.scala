@@ -1,35 +1,24 @@
-package controllers
+package service
 
 import scala.concurrent.Future
-import play.api.libs.ws._
 import play.api.libs.json._
-import play.api.{ Logger, Play }
-import play.api.Play.current
-import play.api.libs.concurrent.Execution.Implicits._
+import play.api.Logger
 
-object Photos {
+object Photos extends MeetupApi[Photo] {
 
-  val envApiKey = scala.util.Properties.envOrElse("MEETUP_API_KEY", "")
-  val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse(envApiKey)
+  def findAll: Future[Seq[Photo]] = findAll(
+    entityType = "photos",
+    processor = transformJsonResponse
+  )
 
-  def findAll: Future[Seq[Photo]] = {
-    WS.url("http://api.meetup.com/2/photos")
-      .withQueryString("group_id" -> "5700242", "key" -> apiKey)
-      .get()
-      .map { result =>
-        if (result.status == 200) {
-          val photos = transformJsonResponse(result.json)
-          Logger.info("Parsed " + photos.size + " photos")
-          photos
-        } else {
-          Logger.warn("Could not retrieve photos form meetup. Did you configure the apiKey in the application configuration or the MEETUP_API_KEY environment variable?")
-          Seq.empty
-        }
-      }
-  }
+  def findAllByEventAndUser(eventId: String, userId: String): Future[Seq[Photo]] = findAll(
+    entityType = "photos",
+    processor = transformJsonResponse,
+    queryParams = "event_id" -> eventId, "tagged" -> userId
+  )
 
   private def transformJsonResponse(response: JsValue): Seq[Photo] = {
-    Logger.info("Received JSON: " + response.toString())
+    Logger.debug("Received JSON: " + response.toString())
 
     (response \ "results").as[JsArray].value.flatMap { photo =>
 

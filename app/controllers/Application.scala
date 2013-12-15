@@ -2,15 +2,13 @@ package controllers
 
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits._
-import service.{ Post, Posts }
+import service._
 import play.api.cache.Cache
 import scala.concurrent.{ Future, Promise }
 import play.api.Play.current
-import service.Github
-import service.Talk
-import service.Talks
 import org.joda.time.LocalDate
 import scala.util.Try
+import play.api.mvc.SimpleResult
 
 object Application extends Controller {
 
@@ -18,8 +16,8 @@ object Application extends Controller {
     {
       for {
         photos <- Photos.findAll
-        upcoming <- Meetup.retrieveEvents("upcoming")
-        past <- Meetup.retrieveEvents("past")
+        upcoming <- Events.findAll("upcoming")
+        past <- Events.findAll("past")
       } yield {
         val randomPhotos = scala.util.Random.shuffle(photos).slice(0, 4).toList
         Ok(views.html.index(upcoming, past.reverse, randomPhotos))
@@ -42,9 +40,22 @@ object Application extends Controller {
     Ok(views.html.talks(talks.talks, talks.page, talks.pages, talks.speakers, talks.tags, talks.dates, tagFilter, speakerFilter, dateFilter))
   }
 
-  def talk(year: Int, month: Int, day: Int, slug: String) = Action {
+  def talk(year: Int, month: Int, day: Int, slug: String) = Action.async {
     val talkInfos = Talks.fetchSingle(new LocalDate(year, month, day), slug)
-    Ok(views.html.talk(talkInfos.talks.headOption, talkInfos.speakers, talkInfos.tags, talkInfos.dates))
+    val photos = talkInfos.talks.headOption.flatMap { talk =>
+      for {
+        eventId <- talk.meetupEventId
+        userId <- talk.meetupMemberId
+      } yield {
+        Photos.findAllByEventAndUser(eventId, userId)
+      }
+    } getOrElse {
+      Future.successful(Seq.empty)
+    }
+
+    photos.map { photos =>
+      Ok(views.html.talk(talkInfos.talks.headOption, talkInfos.speakers, talkInfos.tags, talkInfos.dates, photos))
+    }
   }
 
   def group = Action {

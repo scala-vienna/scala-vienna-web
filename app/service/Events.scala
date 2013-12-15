@@ -1,37 +1,22 @@
-package controllers
+package service
 
 import scala.concurrent.Future
-import play.api.libs.ws._
 import play.api.libs.json._
-import play.api.{ Logger, Play }
-import play.api.Play.current
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTime
-import play.api.libs.concurrent.Execution.Implicits._
 
 /**
  * Fetch events and more from Meetup
  *
  * @author Manuel Bernhardt <manuel@bernhardt.io>
  */
-object Meetup {
+object Events extends MeetupApi[MeetupEvent] {
 
-  val envApiKey = scala.util.Properties.envOrElse("MEETUP_API_KEY", "")
-  val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse(envApiKey)
-
-  def retrieveEvents(status: String): Future[Seq[MeetupEvent]] = {
-    WS.url("https://api.meetup.com/2/events")
-      .withQueryString("group_id" -> "5700242", "key" -> apiKey, "status" -> status, "text_format" -> "plain")
-      .get()
-      .map { result =>
-        if (result.status == 200) {
-          transformEvents(result.json)
-        } else {
-          Logger.warn("Could not retrieve events form meetup. Did you configure the apiKey in the application configuration or the MEETUP_API_KEY environment variable?")
-          Seq.empty
-        }
-      }
-  }
+  def findAll(status: String): Future[Seq[MeetupEvent]] = findAll(
+    entityType = "events",
+    processor = transformEvents,
+    queryParams = "status" -> status, "text_format" -> "plain"
+  )
 
   private def transformEvents(events: JsValue): Seq[MeetupEvent] = {
 
