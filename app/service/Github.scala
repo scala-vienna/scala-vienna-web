@@ -52,7 +52,7 @@ object Github {
   case class User(
     login: String,
     id: Long,
-    //avatar_url: String,
+    avatar_url: String,
     gravatar_id: String,
     url: String,
     html_url: String,
@@ -65,14 +65,14 @@ object Github {
     //    repos_url: String,
     //    events_url: String,
     received_events_url: String,
-    `type`: String,
+    //`type`: String,
     site_admin: Boolean,
-    name: String,
+    name: Option[String],
     company: Option[String],
-    blog: String,
+    blog: Option[String],
     location: Option[String],
     email: Option[String],
-    hireable: Boolean,
+    hireable: Option[Boolean],
     bio: Option[String],
     //public_repos: Int,
     //public_gists: Int,
@@ -109,11 +109,11 @@ object Github {
       .get().map(
         response =>
           if (response.status == 200) {
-            //println(response.json)
             response.json.validate[User].map({
               case user => Some(user)
             }).recoverTotal(e => {
-              Logger.error("Error trying to fetch Github user", e)
+              Logger.error("Error trying to fetch Github user" + e.toString, e)
+              // println(response.json)
               None
             })
           } else None

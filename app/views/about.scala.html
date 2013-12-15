@@ -30,7 +30,7 @@
             </a>
 
             <h3 class="row one-liner">
-                @contributor.name
+                @contributor.name.getOrElse(contributor.login)
                 <br>
                 <small>@contributor.login</small>
             </h3>
@@ -39,7 +39,9 @@
                 @contributor.location.map { location =>
                 <div class="one-liner"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;@location</div>
                 }
-                <div class="one-liner"><span class="glyphicon glyphicon-book"></span>&nbsp;<a href="@contributor.blog" class="url" rel="nofollow me">@contributor.blog</a></div>
+                @contributor.blog.map { blog =>
+                <div class="one-liner"><span class="glyphicon glyphicon-book"></span>&nbsp;<a href="@blog" class="url" rel="nofollow me">@blog</a></div>
+                }
                 <div class="one-liner"><span class="glyphicon glyphicon-flag"></span>&nbsp;On Github since @contributor.created_at.map(_.format("dd.MM.yyyy"))</div>
             </div>
 
