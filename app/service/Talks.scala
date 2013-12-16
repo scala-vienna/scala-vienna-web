@@ -20,6 +20,8 @@ import play.api.Play.current
 import play.api.cache.Cache
 import play.api.templates.Html
 
+import scala.concurrent.duration._
+
 case class Talk(
   // basic
   date: LocalDate,
@@ -40,14 +42,20 @@ case class Talk(
   content: Html,
   tags: Set[String])
 
+/** The cached talks */
 case class Talks(talks: Vector[Talk], speakers: Seq[String], tags: Seq[String], dates: Seq[String])
+
+/** All infos for a single talk list page*/
 case class TalksUI(talks: Vector[Talk], page: Int, pages: Int, speakers: Seq[String], tags: Seq[String], dates: Seq[String])
+
+/** All infos for a single talk page */
+case class TalkUI(talk: Option[Talk], speakers: Seq[String], tags: Seq[String], dates: Seq[String])
 
 object Talks {
   val dateUIFormat = DateTimeFormat.forPattern("YYYY-MM-dd")
 
   private val talksDirectory = "conf/talks"
-  private val pageSize = 5
+  private val pageSize = Play.configuration.getInt("talks.talksPerPage").getOrElse(5)
   private val filenameRegex = """(20\d{6})_([^.]+)\.(md|markdown)""".r
   private val dateMDFormat = DateTimeFormat.forPattern("YYYYMMdd")
 
@@ -63,7 +71,7 @@ object Talks {
     }
   }
 
-  private def parseTalk(file: File): Talk = {
+  private def parseTalk(file: File): Option[Talk] = try {
     debug("Parsing talk " + file.getName())
     def separateHeaderContent = {
       val lines = Source.fromFile(file)(Codec.UTF8).getLines
@@ -93,10 +101,14 @@ object Talks {
     val teaser = markdown(contentLines.take(3).mkString("\n"))
     val tags = Try(properties.getString("tags").split(",").toSet).toOption.getOrElse(Set.empty)
 
-    Talk(date = date, slug = slug, title = title, speaker = speaker,
+    Some(Talk(date = date, slug = slug, title = title, speaker = speaker,
       meetupEventId = meetupEventId, meetupMemberId = meetupMemberId, twitter = twitter, homepage = homepage,
       code = code, slides = slides, video = video,
-      teaser = teaser, content = content, tags = tags)
+      teaser = teaser, content = content, tags = tags))
+  } catch {
+    case e: Exception =>
+      warn(s"Couldn't parse ${file}", e)
+      None
   }
 
   def fetchPaginated(page: Int = 1, tag: Option[String] = None, speaker: Option[String] = None, date: Option[LocalDate] = None): TalksUI = {
@@ -126,14 +138,15 @@ object Talks {
             warn("Error while fetching talks list from Play talks directory", e)
             Array.empty[File]
         }
-        val data = files.map(parseTalk)
+        // flatMapping removes all invalid talks
+        val data = files.flatMap(parseTalk)
         val speakers = data.map(_.speaker).toSeq.distinct.sorted
         val tags = data.map(_.tags).flatten.toSeq.distinct.sorted
         val dates = data.map(_.date).toSeq.distinct.map(dateUIFormat.print).sorted.reverse
         val dataSorted = data.to[Vector].sorted(TalkOrdering)
         val talks = Talks(dataSorted, speakers, tags, dates)
         // TODO set useful timeout for production
-        Cache.set("talks", talks, 30)
+        Cache.set("talks", talks, 30.seconds)
         talks
       }
     }
@@ -146,9 +159,10 @@ object Talks {
     }
   }
 
-  def fetchSingle(date: LocalDate, slug: String): Talks = {
+  def fetchSingle(date: LocalDate, slug: String): TalkUI = {
     val all = fetchList()
-    all.copy(talks = all.talks.filter { talk => talk.date == date && talk.slug == slug })
+    val talk = all.talks.filter { talk => talk.date == date && talk.slug == slug }.headOption
+    TalkUI(talk = talk, speakers = all.speakers, tags = all.tags, dates = all.tags)
   }
 
   private def markdown(markdown: String): Html = Html(pegDownProcessor.markdownToHtml(markdown))

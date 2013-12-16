@@ -42,7 +42,7 @@ object Application extends Controller {
 
   def talk(year: Int, month: Int, day: Int, slug: String) = Action.async {
     val talkInfos = Talks.fetchSingle(new LocalDate(year, month, day), slug)
-    val photos = talkInfos.talks.headOption.flatMap { talk =>
+    val photos = talkInfos.talk.flatMap { talk =>
       for {
         eventId <- talk.meetupEventId
         userId <- talk.meetupMemberId
@@ -54,7 +54,7 @@ object Application extends Controller {
     }
 
     photos.map { photos =>
-      Ok(views.html.talk(talkInfos.talks.headOption, talkInfos.speakers, talkInfos.tags, talkInfos.dates, photos))
+      Ok(views.html.talk(talkInfos.talk, talkInfos.speakers, talkInfos.tags, talkInfos.dates, photos))
     }
   }
 
