@@ -28,6 +28,14 @@ object Application extends Controller {
     }
   }
 
+  def enableDevAccess = Action {
+    Ok("Cookie 'DEV_ACCESS' set! You can now browse the web in dev mode!").withCookies(Cookie("DEV_ACCESS", "true"))
+  }
+
+  def disableDevAccess = Action {
+    Ok("Cookie 'DEV_ACCESS' removed! You can now browse the web as seen by everybody else!").discardingCookies(DiscardingCookie("DEV_ACCESS"))
+  }
+
   def photos = Action.async { implicit request =>
     Photos.findAll.map { allPhotos =>
       Ok(views.html.photos(allPhotos))
