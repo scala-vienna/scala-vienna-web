@@ -3,9 +3,12 @@
 @layout.main("Talks", "talks") {
 
 <div class="container">
-	<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12"></div>
+
+    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+        <h1>Talks</h1>
+    </div>
 	<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
-		<div class="row">
+        <div class="row">
 		@if(pages > 1) {
 			<ul class="pagination">
 	  			<li @if(page == 1) { class="disabled" }><a href="@routes.Application.talks(page=page-1, tag=tagFilter,speaker=speakerFilter)">&laquo;</a></li>
@@ -21,7 +24,8 @@
 	</div>	
 
 	<div id='talks-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-		@if(tagFilter.isDefined || speakerFilter.isDefined || dateFilter.isDefined) {
+
+        @if(tagFilter.isDefined || speakerFilter.isDefined || dateFilter.isDefined) {
 	    	<strong><em>Filter</em></strong><br/>
 			@tagFilter.map{ tagFilter => 
 			<a href="@routes.Application.talks()" title="Remove Filter" class="badge glyphicon glyphicon-remove"> @tagFilter</a> 

@@ -3,6 +3,9 @@
 @layout.main("Photostream", "photos") {
 
     <div class="container photos">
+
+        <h1>Photos</h1>
+
         @photos.grouped(4).map { photoGroup =>
         <div class="row">
             @photoGroup.map { photo =>
