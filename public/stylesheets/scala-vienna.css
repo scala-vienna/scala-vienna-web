@@ -132,6 +132,15 @@ footer {
     margin: 20px 0 20px 0;
 }
 
+.section-dark a {
+    color: white;
+}
+
+.section-dark a:hover {
+    color: #888;
+}
+
+
 /* buttons */
 .btn-primary {
     background-color: #CA4242;

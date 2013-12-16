@@ -20,8 +20,9 @@ object Application extends Controller {
           upcoming <- Events.findAll("upcoming")
           past <- Events.findAll("past")
         } yield {
+          val talks = Talks.fetchVideos.take(3)
           val randomPhotos = scala.util.Random.shuffle(photos).slice(0, 4).toList
-          Ok(views.html.index(upcoming, past.reverse, randomPhotos))
+          Ok(views.html.index(upcoming, past.reverse, randomPhotos, talks))
         }
       }
     }

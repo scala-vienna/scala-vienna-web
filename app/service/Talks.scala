@@ -23,24 +23,26 @@ import play.api.templates.Html
 import scala.concurrent.duration._
 
 case class Talk(
-  // basic
-  date: LocalDate,
-  slug: String,
-  title: String,
-  speaker: String,
-  // social
-  meetupEventId: Option[String],
-  meetupMemberId: Option[String],
-  twitter: Option[String],
-  homepage: Option[String],
-  // presentation
-  code: Option[String],
-  slides: Option[String],
-  video: Option[String],
-  // content
-  teaser: Html,
-  content: Html,
-  tags: Set[String])
+    // basic
+    date: LocalDate,
+    slug: String,
+    title: String,
+    speaker: String,
+    // social
+    meetupEventId: Option[String],
+    meetupMemberId: Option[String],
+    twitter: Option[String],
+    homepage: Option[String],
+    // presentation
+    code: Option[String],
+    slides: Option[String],
+    video: Option[String],
+    // content
+    teaser: Html,
+    content: Html,
+    tags: Set[String]) {
+  def pictureUrl = video.map(v => v.substring(v.indexOf("=") + 1))
+}
 
 /** The cached talks */
 case class Talks(talks: Vector[Talk], speakers: Seq[String], tags: Seq[String], dates: Seq[String])
@@ -117,6 +119,11 @@ object Talks {
     val paginatedTalks = all.talks.slice(start, start + pageSize)
     val pages = Math.ceil(all.talks.size / pageSize.toDouble).toInt
     TalksUI(talks = paginatedTalks, page = page, pages = pages, speakers = all.speakers, tags = all.tags, dates = all.dates)
+  }
+
+  def fetchVideos() = {
+    val all = fetchList(None, None, None)
+    all.talks.filter(_.video.isDefined)
   }
 
   private def fetchList(tag: Option[String] = None, speaker: Option[String] = None, date: Option[LocalDate] = None): Talks = {
