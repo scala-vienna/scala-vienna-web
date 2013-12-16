@@ -104,10 +104,12 @@ footer {
     padding-right: 10px;
 }
 
+/** photos */
 @media (min-width: 1024px) {
     .table{
         display: table;
         vertical-align: middle;
+        margin-bottom: 0;
     }
 
     .table-cell{
@@ -115,4 +117,28 @@ footer {
         vertical-align: middle;
         float: none;
     }
+}
+
+.section-dark.photos {
+    padding-bottom: 0;
+    margin-top: 0;
+}
+
+/** dark container */
+.section-dark {
+    background-color: rgb(43, 11, 3);
+    color: white;
+    padding: 20px 0 20px 0;
+    margin: 20px 0 20px 0;
+}
+
+/* buttons */
+.btn-primary {
+    background-color: #CA4242;
+    border-color: #BE2B2B;
+}
+
+.btn-primary:hover {
+    background-color: #aa0000;
+    border-color: #aa0000;
 }
