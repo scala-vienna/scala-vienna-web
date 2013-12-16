@@ -84,41 +84,29 @@ object Github {
   val apiKey = Play.configuration.getString("github.apiKey").getOrElse(scala.util.Properties.envOrElse("GITHUB_API_KEY", ""))
 
   implicit val contributorFormat = Json.format[Contributor]
-  implicit val userFormat = Json.format[User]
 
   def getContributors: Future[List[Contributor]] = {
     WS.url("https://api.github.com/repos/rafacm/scala-vienna-web/contributors")
       .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
       .get().map(response =>
         if (response.status == 200) {
-          //println(response.json.toString())
-          response.json.validate[List[Contributor]].map({
-            case list => list
-          }).recoverTotal(e => Nil)
-        } else {
-          Logger.warn(response.statusText)
-          Nil
-        }
-
+          response.json.validate[List[Contributor]]
+            .recoverTotal(e => { Logger.warn(s"getContributors: ${e.toString}"); Nil })
+        } else { Logger.warn(s"getUser: ${response.statusText}"); Nil }
       )
   }
+
+  implicit val userFormat = Json.format[User]
 
   def getUser(url: String): Future[Option[User]] = {
     WS.url(url)
       .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
-      .get().map(
-        response =>
-          if (response.status == 200) {
-            response.json.validate[User].map({
-              case user => Some(user)
-            }).recoverTotal(e => {
-              Logger.error("Error trying to fetch Github user" + e.toString, e)
-              // println(response.json)
-              None
-            })
-          } else None
+      .get().map(response =>
+        if (response.status == 200) {
+          response.json.validate[User].map({ case user => Some(user) })
+            .recoverTotal(e => { Logger.error(s"getUser: ${e.toString}", e); None })
+        } else { Logger.warn(s"getUser: ${response.statusText}"); None }
       )
   }
-
 }
 

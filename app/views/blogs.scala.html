@@ -43,7 +43,11 @@
                 <a name="@post.title"></a>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><a href="@post.link" target="_blank">@post.title</a><br><small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by @post.author</small></h3>
+                        <h3 class="panel-title">
+                            <a href="@post.link" target="_blank">@post.title</a>
+                            <br>
+                            <small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by <a href="./blogs?author=@post.author">@post.author</a></a></small>
+                        </h3>
                     </div>
                     <div class="panel-body">
                         @Html(post.description.getOrElse(""))

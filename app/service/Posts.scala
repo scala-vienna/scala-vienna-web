@@ -55,12 +55,7 @@ object Posts {
           val url = b.get("url").unwrapped().asInstanceOf[String]
           val cats = b.get("categories").unwrapped().asInstanceOf[util.ArrayList[String]].toSet
           Seq(Blog(url, if (cats.isEmpty) defaultCategories else cats))
-        } catch {
-          case e: Throwable => {
-            Logger.warn(e.getMessage)
-            Seq()
-          }
-        }
+        } catch { case e: Throwable => { Logger.warn(e.getMessage); Nil } }
       })
     }
     case None => Seq(
