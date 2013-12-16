@@ -14,13 +14,15 @@ object Application extends Controller {
 
   def index = Action.async { implicit request =>
     {
-      for {
-        photos <- Photos.findAll
-        upcoming <- Events.findAll("upcoming")
-        past <- Events.findAll("past")
-      } yield {
-        val randomPhotos = scala.util.Random.shuffle(photos).slice(0, 4).toList
-        Ok(views.html.index(upcoming, past.reverse, randomPhotos))
+      Cache.getOrElse("index", 600) {
+        for {
+          photos <- Photos.findAll
+          upcoming <- Events.findAll("upcoming")
+          past <- Events.findAll("past")
+        } yield {
+          val randomPhotos = scala.util.Random.shuffle(photos).slice(0, 4).toList
+          Ok(views.html.index(upcoming, past.reverse, randomPhotos))
+        }
       }
     }
   }
