@@ -67,6 +67,10 @@ p.entry-meta {
 .sponsor-img-container {
     min-height: 150px;
     vertical-align: middle;
+    background-repeat:no-repeat;
+    background-position:center;
+    /* background-size: contain; */
+    display: block;
 }
 
 .sponsor-img {

@@ -92,9 +92,9 @@
     <h2>Talks</h2>
     <div class="row talks">
         @for(talk <- talks) {
-        <div class="col-lg-4">
+        <div class="col-sm-4">
             <a href="@talk.video">
-            <img class="img-rounded" src="https://i1.ytimg.com/vi/@talk.pictureUrl/mqdefault.jpg" alt="@talk.title">
+            <img class="img-rounded img-responsive" src="https://i1.ytimg.com/vi/@talk.pictureUrl/mqdefault.jpg" alt="@talk.title">
             </a>
             <h3><a href="@routes.Application.talk(talk.date.getYear(), talk.date.getMonthOfYear(), talk.date.getDayOfMonth(), talk.slug)">@talk.title</a></h3>
             <p>@talk.teaser</p>
@@ -109,40 +109,40 @@
 
     <h2>Our Sponsors</h2>
     <div class="row sponsors">
-        <div class="col-lg-4">
-            <div class="sponsor-img-container">
-                <a href="http://www.openforce.at" title="openForce GmbH" target="_blank"><img class="sponsor-img" src="/assets/images/openforce_logo.png" alt="openForce GmbH"/></a>
-            </div>
+        <div class="col-md-4">
+            <a href="http://www.openforce.at" title="openForce GmbH" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/openforce_logo.png')"></span>
+            </a>
             <h3 class="sponsor-name">openForce GmbH</h3>
         </div>
-        <div class="col-lg-4">
-            <div class="sponsor-img-container">
-                <a href="http://www.sektor5.at" title="Sektor5 Coworking Spaces" target="_blank"><img class="sponsor-img" src="/assets/images/sektor5_logo.png" alt="Sektor5 Coworking Spaces"/></a>
-            </div>
+        <div class="col-md-4">
+            <a href="http://www.sektor5.at" title="Sektor5 Coworking Spaces" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/sektor5_logo.png')"></span>
+            </a>
             <h3 class="sponsor-name">Sektor5 Coworking Spaces</h3>
         </div>
-        <div class="col-lg-4">
-            <div class="sponsor-img-container">
-                <a href="http://www.stockwerk.co.at/" title="Stockwerk Coworking" target="_blank"><img class="sponsor-img" src="/assets/images/stockwerk_logo.jpg" alt="Stockwerk Coworking"/></a>
-            </div>
+        <div class="col-md-4">
+            <a href="http://www.stockwerk.co.at/" title="Stockwerk Coworking" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/stockwerk_logo.jpg')"></span>
+            </a>
             <h3 class="sponsor-name">Stockwerk Coworking</h3>
         </div>
     </div>
     <div class="row sponsors">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-4">
-            <div class="sponsor-img-container">
-                <a href="http://www.oreilly.com/" title="O'Reilly Verlag" target="_blank"><img class="sponsor-img" src="/assets/images/oreilly_badge.jpg" alt="O'Reilly Verlag"/></a>
-            </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <a href="http://www.oreilly.com/" title="O'Reilly Verlag" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/oreilly_badge.jpg')"></span>
+            </a>
             <h3 class="sponsor-name">O'Reilly Verlag</h3>
         </div>
-        <div class="col-lg-4">
-            <div class="sponsor-img-container">
-                <a href="http://www.manning.com/" title="Manning Publications" target="_blank"><img class="sponsor-img" src="/assets/images/manning_badge.jpg" alt="Manning Publications"/></a>
-            </div>
+        <div class="col-md-4">
+            <a href="http://www.manning.com/" title="Manning Publications" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/manning_badge.jpg')"></span>
+            </a>
             <h3 class="sponsor-name">Manning Publications</h3>
         </div>
-        <div class="col-lg-2"></div>
+        <div class="col-md-2"></div>
     </div>
 
 </div><!-- end container -->
