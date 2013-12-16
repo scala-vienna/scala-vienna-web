@@ -169,7 +169,7 @@ object Talks {
   def fetchSingle(date: LocalDate, slug: String): TalkUI = {
     val all = fetchList()
     val talk = all.talks.filter { talk => talk.date == date && talk.slug == slug }.headOption
-    TalkUI(talk = talk, speakers = all.speakers, tags = all.tags, dates = all.tags)
+    TalkUI(talk = talk, speakers = all.speakers, tags = all.tags, dates = all.dates)
   }
 
   private def markdown(markdown: String): Html = Html(pegDownProcessor.markdownToHtml(markdown))
