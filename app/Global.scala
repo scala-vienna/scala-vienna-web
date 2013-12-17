@@ -14,6 +14,12 @@ object Global extends WithFilters(new CountdownFilter) {
     ))
   }
 
+  override def onHandlerNotFound(request: RequestHeader) = {
+    Future.successful(NotFound(
+      views.html.notFoundPage(request.path)
+    ))
+  }
+
 }
 
 /**
