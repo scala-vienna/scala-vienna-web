@@ -3,7 +3,7 @@ title = "Small intro to Cucumber in Scala"
 speaker = Sebastian Nozzi
 twitter = sebnozzi
 meetupEventId = 108059032
-meetupMemberId = 69371392
+meetupMemberId = 75099292
 homepage = "http://www.sebnozzi.com/"
 tags = "Scala,Cucumber,BDD"
 ---
