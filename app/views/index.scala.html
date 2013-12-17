@@ -28,9 +28,9 @@
 <div class="section-dark photos">
 <div class="container">
 
-    <div class="row table">
+    <div class="row">
         @photos.map { photo =>
-            <div class="col-lg-3 col-sm-3 col-xs-12 thumb table-cell">
+            <div class="col-lg-3 col-sm-3 col-xs-12 thumb">
                 <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
                     <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
                 </a>
