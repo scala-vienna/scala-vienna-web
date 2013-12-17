@@ -8,7 +8,7 @@ $(function(){
         format: "dHMS",
         onExpiry: function() {
             // we have lift-off!
-            document.location.href = "/?lift-off";
+            document.location.href = "http://scala-vienna.org/?lift-off";
         }
     });
 
