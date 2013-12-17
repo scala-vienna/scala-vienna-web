@@ -3,6 +3,8 @@ package service
 import scala.concurrent.Future
 import play.api.libs.json._
 import play.api.Logger
+import javax.imageio.ImageIO
+import java.net.URL
 
 object Photos extends MeetupApi[Photo] {
 
@@ -18,7 +20,7 @@ object Photos extends MeetupApi[Photo] {
   )
 
   private def transformJsonResponse(response: JsValue): Seq[Photo] = {
-    Logger.debug("Received JSON: " + response.toString())
+    //Logger.debug("Received JSON: " + response.toString())
 
     (response \ "results").as[JsArray].value.flatMap { photo =>
 
@@ -30,6 +32,13 @@ object Photos extends MeetupApi[Photo] {
         highres <- (photo \ "highres_link").asOpt[String]
         caption <- (photo \ "caption").asOpt[String].orElse(Some("")) // Most pictures do not have a caption!
       } yield {
+        /*
+         * We want to store the sizes so we can filter only the landscape photos for the front page
+         */
+        val image = ImageIO.read(new URL(thumbnail));
+        val height = image.getHeight
+        val width = image.getWidth
+
         Photo(
           id = id.toString(),
           eventId = eventId,
@@ -37,7 +46,8 @@ object Photos extends MeetupApi[Photo] {
           thumbnailUrl = thumbnail,
           // FIXME: there does not seem to be a way to access this bigger thumbnail via the API!
           mediumUrl = medium, //thumbnail.replaceAllLiterally("thumb_", "global_"),
-          highresUrl = highres
+          highresUrl = highres,
+          width = width, height = height
         )
       }
     }
@@ -50,4 +60,5 @@ case class Photo(
   caption: String,
   thumbnailUrl: String,
   mediumUrl: String,
-  highresUrl: String)
+  highresUrl: String,
+  width: Int, height: Int)
