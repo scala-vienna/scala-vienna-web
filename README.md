@@ -20,6 +20,10 @@ This is the [Play](http://www.playframework.com) application that powers the web
 - Create an environment variable with `export GITHUB_API_KEY=<your API key>`
 - Run Play with `play ~ run` to enable continuous reloading during development
 
+## Deployment
+
+- We use [Travis CI](https://travis-ci.org/scala-vienna/scala-vienna-web) to automagically deploy **the master branch** to Heroku.
+
 ## LICENSE
 
 - This software is licensed under the terms of the Apache 2.0 License  which you find in the file named `LICENSE.txt` in this repository.

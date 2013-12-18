@@ -1,3 +1,10 @@
 language: scala
 scala:
-  - 2.10.2
+- 2.10.2
+deploy:
+  provider: heroku
+  api_key:
+    secure: nJExaq//7AhahLg0c8H4VCQ7ftkI5n+3FcO5/lq8kRpgCABIO/YScTlLABUDTFKeTkB21ga7tbpkCkUb97OXBmTDejXa/gqrc9Rodre38KrFkPUtp3M9QlUL220YvFY1nIDkTAZUp+2FrF1PonMhxmWaA0+AJ95CmjLqkPsK4AM=
+  app: scala-vienna-prod
+  on:
+    repo: scala-vienna/scala-vienna-web
