@@ -10,8 +10,6 @@ GET   /talks/:year/:month/:day/:slug   controllers.Application.talk(year:Int,mon
 # GET     /group                      controllers.Application.group
 GET   /blogs                           controllers.Application.blogs
 GET   /about                           controllers.Application.about
-GET   /enable-dev-access               controllers.Application.enableDevAccess
-GET   /disable-dev-access               controllers.Application.disableDevAccess
 
 # Map static resources from the /public folder to the /assets URL path
 GET   /assets/*file                    controllers.Assets.at(path="/public", file)
