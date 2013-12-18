@@ -3,6 +3,7 @@ title = Scala Taxonomy explained for Java programmers
 speaker = Radim Pavlicek
 meetupEventId = 108059472
 meetupMemberId = 21568931
+twitter = radimpavlicek
 tags = "Scala,Language"
 slides = "http://de.slideshare.net/xpavlic4/scala-taxonomy"
 video = "http://www.youtube.com/watch?v=l14aVDVn3l0"
