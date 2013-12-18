@@ -1,6 +1,8 @@
 # Scala Vienna Web
 
-This is the [Play](http://www.playframework.com) application that shall power tomorrow's Scala Vienna User Group website!
+[![Build Status](https://travis-ci.org/scala-vienna/scala-vienna-web.png)](https://travis-ci.org/scala-vienna/scala-vienna-web)
+
+This is the [Play](http://www.playframework.com) application that powers the [Vienna Scala User Group web](http://scala-vienna.org)!
 
 ## Getting started
 
@@ -13,8 +15,7 @@ This is the [Play](http://www.playframework.com) application that shall power to
 - Run Play with `play ~ run` to enable continuous reloading during development
 - Since we are all working on the same repo, make sure you [do a pull with rebase](http://gitready.com/advanced/2009/02/11/pull-with-rebase.html)  when updating your local repo!
 
-## TODO
+## TODOs
 
-- Meetup integration
-- Twitter integration
+- Add features description: how to adda new blogs and talks!
 
