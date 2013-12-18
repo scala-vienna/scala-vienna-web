@@ -8,3 +8,7 @@ deploy:
   app: scala-vienna-prod
   on:
     repo: scala-vienna/scala-vienna-web
+MEETUP_API_KEY:
+  secure: qUTGe1d/hdYGtAq/H/oWpYmSf3wUvME6wopDTlMQaOUIrnUEtwHVbZ/w6W1bgjYwJLDH4o9pyn5lw25ICM+tWyj7ChldAlOGDWYp8P14UP/6MZyogL2psHc7aKbXncRd6WTlGHr8kYamxGDsCUuFYcVqRIQXmZSv4o0rw8Yn5e8=
+GITHUB_API_KEY:
+  secure: TGg7eioNdIZ/ccWHMlbSuo1qOswoYlcDE9h8HSVLyHEEFvGVYuFCs1NHgJLP+6uT95RgVWkBE1fIE7aEQ/m2JPB4i8VrON7OjIXSHHrbgLRMWc3ECrNWX8uAu/BG9FaAHNUKvvBpvi+jy8Ckxd9R7g5pfR9jZ04x9wdMl5FAyGI=
