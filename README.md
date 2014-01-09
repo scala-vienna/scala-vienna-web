@@ -18,7 +18,7 @@ This is the [Play](http://www.playframework.com) application that powers the web
 - Create an environment variable with `export MEETUP_API_KEY=<your API key>`
 - Create a "Personal Access Token" for the app here https://github.com/settings/applications
 - Create an environment variable with the generated GitHub access token with `export GITHUB_API_KEY=<your API key>`
-- Check the source code for the meetup group id adn replace it with your own (Yes! We need to refactor this out to the conf file! #29)
+- Check the source code for the meetup group id and replace it with your own (Yes! We need to refactor this out to the conf file! #29)
 - Run Play with `play ~ run` to enable continuous reloading during development
 
 ## Deployment
