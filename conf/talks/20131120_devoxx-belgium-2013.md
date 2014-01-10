@@ -1,6 +1,6 @@
 ---
 title = Devoxx Belgium 2013
-speaker = Peter Koflfer
+speaker = Peter Kofler
 twitter = codecopkofler
 meetupEventId = 120994612
 meetupMemberId = 69367752
