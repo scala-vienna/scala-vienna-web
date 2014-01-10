@@ -18,3 +18,4 @@ dist
 # Eclipse
 /.cache
 *.*~
+.sbtopts
