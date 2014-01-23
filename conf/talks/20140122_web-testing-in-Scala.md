@@ -4,7 +4,7 @@ speaker = Radim Pavlicek
 twitter = radimpavlicek
 meetupEventId = 145315622
 meetupMemberId = 21568931
-homepage = "http://www.laurinka.com”
+homepage = "http://www.laurinka.com"
 slides = "http://www.slideshare.net/xpavlic4/web-ui-testing"
 tags = "Scala,Selenium,web testing, ui testing, page object, page object pattern”
 ---
