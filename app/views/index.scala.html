@@ -94,7 +94,7 @@
         @for(talk <- talks) {
         <div class="col-sm-4">
             <a href="@talk.video">
-            <img class="img-rounded img-responsive" src="https://i1.ytimg.com/vi/@talk.pictureUrl/mqdefault.jpg" alt="@talk.title">
+                <img class="img-rounded img-responsive" src="https://i1.ytimg.com/vi/@talk.pictureUrl/mqdefault.jpg" alt="@talk.title">
             </a>
             <h3><a href="@routes.Application.talk(talk.date.getYear(), talk.date.getMonthOfYear(), talk.date.getDayOfMonth(), talk.slug)">@talk.title</a></h3>
             <p>@talk.teaser</p>
@@ -102,6 +102,7 @@
         }
     </div><!-- /.row -->
 
+    <a class="btn btn-primary btn-sm pull-right" role="button" href="@routes.Application.talks()">All talks</a>
 </div>
 </div>
 
