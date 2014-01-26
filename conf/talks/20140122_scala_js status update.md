@@ -1,5 +1,5 @@
 ---
-title = "Small intro to Cucumber in Scala"
+title = "Scala.js status update"
 speaker = Sebastian Nozzi
 twitter = sebnozzi
 meetupEventId = 145315622
