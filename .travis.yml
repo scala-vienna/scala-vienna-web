@@ -4,7 +4,7 @@ scala:
 deploy:
   provider: heroku
   api_key:
-    secure: nJExaq//7AhahLg0c8H4VCQ7ftkI5n+3FcO5/lq8kRpgCABIO/YScTlLABUDTFKeTkB21ga7tbpkCkUb97OXBmTDejXa/gqrc9Rodre38KrFkPUtp3M9QlUL220YvFY1nIDkTAZUp+2FrF1PonMhxmWaA0+AJ95CmjLqkPsK4AM=
+    secure: b4zy89j4iq/7Ve20lKKdX4lZkHl3Ups02SgPL40P4tTeqXVwtSepTptbFuUTwXGIh47Vdq35r68iT+w87im6VTJZg8vwesNbe3z3gYS5beeAd55QABrQUiSqGhNB6Tyl9dHPDqsrBVf81eOjTM2d6kxvdFfJ+7u8lGDEfZrlecI=
   app: scala-vienna-prod
   on:
     repo: scala-vienna/scala-vienna-web
