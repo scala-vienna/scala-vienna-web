@@ -4,6 +4,7 @@ speaker = Alexander Daniel
 twitter = lachdrache
 meetupEventId = 145315622
 meetupMemberId = 69371392
+homepage = "http://lachdrache.wordpress.com"
 slides = "http://alexanderdaniel.github.io/ping-conf-impressions/#/"
 tags = "Scala,pingconf,conference,Play"
 ---
