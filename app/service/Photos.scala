@@ -41,10 +41,10 @@ object Photos extends MeetupApi[Photo] {
         // We want to store the sizes so we can filter only the landscape photos for the front page
         // TODO we should rid ourselves of the blocking here, and adapt the interface to deal with a Future result
         import akka.pattern.ask
-        implicit val timeout = Timeout(5.seconds)
+        implicit val timeout = Timeout(2.second)
         val eventuallySize = imageSizeReader ? thumbnail
         val (width: Int, height: Int) = try {
-          Await.result(eventuallySize, 5.seconds).asInstanceOf[(Int, Int)]
+          Await.result(eventuallySize, 2.seconds).asInstanceOf[(Int, Int)]
         } catch {
           case t: Throwable =>
             (0, 0)
@@ -73,10 +73,10 @@ class ImageSizeReader extends Actor {
         val image = ImageIO.read(new URL(thumbnail))
         val height = image.getHeight
         val width = image.getWidth
-        (height, width)
+        sender ! (height, width)
       } catch {
         case t: Throwable =>
-          (0, 0)
+          sender ! (0, 0)
       }
   }
 
