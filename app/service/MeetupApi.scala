@@ -38,7 +38,7 @@ trait MeetupApi[A] {
               Cache.set(cacheKey, res, expiration = 5 minutes)
               res
             } else {
-              Logger.warn("Could not retrieve events form meetup. Did you configure the apiKey in the application configuration or the MEETUP_API_KEY environment variable?")
+              Logger.warn("Could not retrieve events from meetup. Did you configure the apiKey in the application configuration or the MEETUP_API_KEY environment variable?")
               Seq.empty
             }
           }

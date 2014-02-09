@@ -1,12 +1,18 @@
 package service
 
-import scala.concurrent.Future
+import scala.concurrent.{ Await, Future }
 import play.api.libs.json._
-import play.api.Logger
 import javax.imageio.ImageIO
 import java.net.URL
+import akka.actor.{ Props, Actor }
+import play.api.libs.concurrent.Akka
+import scala.concurrent.duration._
+import play.api.Play.current
+import akka.util.Timeout
 
 object Photos extends MeetupApi[Photo] {
+
+  lazy val imageSizeReader = Akka.system.actorOf(Props[ImageSizeReader])
 
   def findAll: Future[Seq[Photo]] = findAll(
     entityType = "photos",
@@ -32,12 +38,17 @@ object Photos extends MeetupApi[Photo] {
         highres <- (photo \ "highres_link").asOpt[String]
         caption <- (photo \ "caption").asOpt[String].orElse(Some("")) // Most pictures do not have a caption!
       } yield {
-        /*
-         * We want to store the sizes so we can filter only the landscape photos for the front page
-         */
-        val image = ImageIO.read(new URL(thumbnail));
-        val height = image.getHeight
-        val width = image.getWidth
+        // We want to store the sizes so we can filter only the landscape photos for the front page
+        // TODO we should rid ourselves of the blocking here, and adapt the interface to deal with a Future result
+        import akka.pattern.ask
+        implicit val timeout = Timeout(5.seconds)
+        val eventuallySize = imageSizeReader ? thumbnail
+        val (width: Int, height: Int) = try {
+          Await.result(eventuallySize, 5.seconds).asInstanceOf[(Int, Int)]
+        } catch {
+          case t: Throwable =>
+            (0, 0)
+        }
 
         Photo(
           id = id.toString(),
@@ -52,6 +63,23 @@ object Photos extends MeetupApi[Photo] {
       }
     }
   }
+}
+
+class ImageSizeReader extends Actor {
+
+  def receive = {
+    case thumbnail: String =>
+      try {
+        val image = ImageIO.read(new URL(thumbnail))
+        val height = image.getHeight
+        val width = image.getWidth
+        (height, width)
+      } catch {
+        case t: Throwable =>
+          (0, 0)
+      }
+  }
+
 }
 
 case class Photo(
