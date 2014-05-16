@@ -17,13 +17,12 @@ import scala.language.postfixOps
  */
 trait MeetupApi[A] {
 
-  val SCALA_VIENNA_GROUP_ID = "5700242"
-
   val envApiKey = scala.util.Properties.envOrElse("MEETUP_API_KEY", "")
   val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse(envApiKey)
+  val meetupGrouId = Play.configuration.getString("meetup.groupId").getOrElse("5700242")
 
   def findAll(entityType: String, processor: JsValue => Seq[A], queryParams: (String, String)*): Future[Seq[A]] = {
-    val qs = Seq("group_id" -> SCALA_VIENNA_GROUP_ID, "key" -> apiKey) ++ queryParams
+    val qs = Seq("group_id" -> meetupGrouId, "key" -> apiKey) ++ queryParams
     val cacheKey = entityType + qs.mkString
 
     Cache.getAs[Future[Seq[A]]](cacheKey) match {
