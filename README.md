@@ -24,7 +24,10 @@ This is the [Play](http://www.playframework.com) application that powers the web
 
 ## Deployment
 
-- We use [Travis CI](https://travis-ci.org/scala-vienna/scala-vienna-web) to automagically deploy **the master branch** to Heroku.
+We use [Travis CI](https://travis-ci.org/scala-vienna/scala-vienna-web) to automatically deploy to Heroku:
+ 
+- **the master branch** to the **production** app: http://www.scala-vienna.org
+- **the develop branch** to the **dev/test/stage** app: http://dev.scala-vienna.org
 
 # Feature Pipeline
 
