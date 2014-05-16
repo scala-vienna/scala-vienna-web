@@ -1,13 +1,17 @@
 language: scala
 scala:
 - 2.10.2
+branches:
+  only:
+    - master
+    - develop
 deploy:
   provider: heroku
   api_key:
     secure: b4zy89j4iq/7Ve20lKKdX4lZkHl3Ups02SgPL40P4tTeqXVwtSepTptbFuUTwXGIh47Vdq35r68iT+w87im6VTJZg8vwesNbe3z3gYS5beeAd55QABrQUiSqGhNB6Tyl9dHPDqsrBVf81eOjTM2d6kxvdFfJ+7u8lGDEfZrlecI=
-  app: scala-vienna-prod
-  on:
-    repo: scala-vienna/scala-vienna-web
+  app:
+    master: scala-vienna-prod
+    develop: scala-vienna-dev
 MEETUP_API_KEY:
   secure: qUTGe1d/hdYGtAq/H/oWpYmSf3wUvME6wopDTlMQaOUIrnUEtwHVbZ/w6W1bgjYwJLDH4o9pyn5lw25ICM+tWyj7ChldAlOGDWYp8P14UP/6MZyogL2psHc7aKbXncRd6WTlGHr8kYamxGDsCUuFYcVqRIQXmZSv4o0rw8Yn5e8=
 GITHUB_API_KEY:
