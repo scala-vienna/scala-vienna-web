@@ -1,6 +1,8 @@
 ---
 title = From PHP to Playframework in 3 months
 speaker = Manuel Bernhart
+twitter = elmanu
+slides = "http://www.slideshare.net/ManuelBernhardt/project-phoenix-from-php-to-the-play-framework-in-3-months"
 meetupEventId = 183865162
 meetupMemberId = 67741712
 tags = "Scala, playframework"
