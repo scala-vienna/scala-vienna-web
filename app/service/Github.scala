@@ -16,7 +16,7 @@
 
 package service
 
-import play.api.libs.ws.WS
+import play.api.libs.ws.{ WSAuthScheme, WS }
 import play.Logger
 import play.api.libs.json.Json
 import scala.concurrent.ExecutionContext
@@ -87,7 +87,7 @@ object Github {
 
   def getContributors: Future[List[Contributor]] = {
     WS.url("https://api.github.com/repos/rafacm/scala-vienna-web/contributors")
-      .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
+      .withAuth(apiKey, "x-oauth-basic", WSAuthScheme.BASIC)
       .get().map(response =>
         if (response.status == 200) {
           response.json.validate[List[Contributor]]
@@ -100,7 +100,7 @@ object Github {
 
   def getUser(url: String): Future[Option[User]] = {
     WS.url(url)
-      .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
+      .withAuth(apiKey, "x-oauth-basic", WSAuthScheme.BASIC)
       .get().map(response =>
         if (response.status == 200) {
           response.json.validate[User].map({ case user => Some(user) })
