@@ -1,10 +1,10 @@
 language: scala
 scala:
-- 2.10.2
+- 2.11.1
 branches:
   only:
-    - master
-    - develop
+  - master
+  - develop
 deploy:
   provider: heroku
   api_key:
@@ -12,7 +12,9 @@ deploy:
   app:
     master: scala-vienna-prod
     develop: scala-vienna-dev
-MEETUP_API_KEY:
-  secure: qUTGe1d/hdYGtAq/H/oWpYmSf3wUvME6wopDTlMQaOUIrnUEtwHVbZ/w6W1bgjYwJLDH4o9pyn5lw25ICM+tWyj7ChldAlOGDWYp8P14UP/6MZyogL2psHc7aKbXncRd6WTlGHr8kYamxGDsCUuFYcVqRIQXmZSv4o0rw8Yn5e8=
-GITHUB_API_KEY:
-  secure: TGg7eioNdIZ/ccWHMlbSuo1qOswoYlcDE9h8HSVLyHEEFvGVYuFCs1NHgJLP+6uT95RgVWkBE1fIE7aEQ/m2JPB4i8VrON7OjIXSHHrbgLRMWc3ECrNWX8uAu/BG9FaAHNUKvvBpvi+jy8Ckxd9R7g5pfR9jZ04x9wdMl5FAyGI=
+# Encripted env vars: MEETUP_API_KEY, GITHUB_AUTH_CLIENT_ID, GITHUB_AUTH_CLIENT_SECRET
+env:
+  global:
+  - secure: PCx4ucdd4FpPaoJ/n7xPtKpNWnefHzFezYjZ1CqmPSMSj2F9JoZO8n1GlrP4sH4I+SLzvPvUXhwaHGY7k2nIgb6596ny+G3uDcWPBTPzSxqPL3uCd0iD64PdnI+q3i724XQFfBqusVREBHB64NXPDK6t1F7PdIW3dO2ci19QV/Q=
+  - secure: dGDgsvCiFSh9h1DUtRLlcofP3e3VRQP+MLTC5avirWJ5ZUAxkaw1ZxM75tgP2JPwz+Y6iqi+jdtUGEWj8YaeeNkMpiuPrS2XpSBM2WvzLKCXxgHplGHoI4bFNA1Sxoyb+CEqaHXKdoJWnQdRoWn7dbDqc33R20Hi2IulMWMZwZg=
+  - secure: NAXYgBGPUJsuB7HkW8BhdZuCHCkglPfKS7pK5pz8u5IOGrMKk9Ws/HFAODPBg1xEt83RRanaQRt/nY1VWCO4J+4NCwVRP9SIeQJk8+i7h1zz3K7E24b9SpAig/yzGGhgc87kqSUnKYxEwFQefdCC0izZYNyoUapbZRo95GqfYnc=

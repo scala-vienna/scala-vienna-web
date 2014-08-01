@@ -15,12 +15,15 @@ This is the [Play](http://www.playframework.com) application that powers the web
 - Grab and install [Play](http://www.playframework.com)
 - Install the [Chrome tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) to get the auto-reloading benefits
 - Check your meetup.com API key here http://www.meetup.com/meetup_api/key/
-- Create a "Personal Access Token" for the app on your GitHub account: https://github.com/settings/applications
-- Create the following environment variables:
+- Configure the Meetup API authentication (see [Getting a Meetup API Key](https://secure.meetup.com/meetup_api/key/)):
   - `export MEETUP_API_KEY=<your API key>`
-  - `export GITHUB_API_KEY=<your GITHUB application access token>`
 - Optional: configure a different Meetup group ID in the meetup.groupId key in the application.conf file
-- Run Play with `play ~ run` to enable continuous reloading during development
+- Configure GitHub API authentication. It you are part of the [Scala Vienna GitHub organization](https://github.com/scala-vienna) you will be able to access 
+the `client` id and the `client secret` keys in the ["Applications" section](https://github.com/organizations/scala-vienna/settings/applications/119475). 
+Otherwise asks us to be added or generate your own keys.
+  - `export GITHUB_AUTH_CLIENT_ID=<the GitHub application client id>`
+  - `export GITHUB_AUTH_CLIENT_SECRET=<the GitHub application secret>`
+- Use `activator` to start the app
 
 ## Deployment
 
