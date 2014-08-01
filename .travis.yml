@@ -15,8 +15,6 @@ deploy:
 # Encripted env vars: MEETUP_API_KEY, GITHUB_AUTH_CLIENT_ID, GITHUB_AUTH_CLIENT_SECRET
 env:
   global:
-  - FOO_BAR_ONE=foo_bar_1
   - secure: "kDe2IKphFMO6Z4v64nw7b78S26jE3dvj+PJYboJCV9LEb3OHt4FFWBoymq3IcbfQWiyaNDt6HhRxh+Ve3BLI06uSDv+s7/hTsShY8wEkzhhjHWxMqVzuMmOKVMX79MHp45JPjVo4exIbPyx5CcbNMKvEz0CMuCoDnJ5JGJLLHeA="
   - secure: "Ap1zbp61qPYe8eJeODY5VWmv4bTUBDoZfB9NVH7yoDVddQoB4ClzDSd0aPTu9sVs5aveR/i9dXc/++4KObrd5Lic3e67qcTLzsTOEPpKXtrGuZw0z5JLaXbxjJKiSz1Toww4Ye9Fjv1v7b7df9kROVsBsU2a1tdxI7wbhzM4iMQ="
   - secure: "CVky8vspAO0tRsm1683KseDWXIW1nuyTn4cX7Za/axLn5p68oYK8679jAccjOLaaVVXmpN9KgHf1db8JpIxLDABYPVvSZhLRFkr9x5ygthZygIok/n1ZBbmSvFqS2EquzIcSDhPbVwSm6DKWlmYcn5QnpyanGPaTj8jCTwnji5U="
-  - FOO_BAR_TWO=foo_bar_2
