@@ -8,7 +8,7 @@ import scala.concurrent.{ Future, Promise }
 import play.api.Play.current
 import org.joda.time.LocalDate
 import scala.util.Try
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 
 object Application extends Controller {
 
@@ -75,7 +75,7 @@ object Application extends Controller {
         val norm = cats.toList.map(v => (v._1, 1 + v._2 * 4 / max))
         norm.toList
       }
-      val p = Promise[SimpleResult]()
+      val p = Promise[Result]()
       val tagOpt = request.getQueryString("tag")
       val authorOpt = request.getQueryString("author")
 
