@@ -2,7 +2,9 @@ name := "scala-vienna-web"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .enablePlugins(SbtTwirl)
 
 scalaVersion := "2.11.1"
 

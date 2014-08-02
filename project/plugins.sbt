@@ -13,3 +13,5 @@ addSbtPlugin("com.jamesward" %% "play-auto-refresh" % "0.0.10")
 
 // Eclipse project generator
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.5.0")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-twirl" % "1.0.2")
