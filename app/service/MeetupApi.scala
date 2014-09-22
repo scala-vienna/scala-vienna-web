@@ -1,5 +1,7 @@
 package service
 
+import play.api.libs.concurrent.Promise
+
 import scala.concurrent.Future
 import play.api.libs.ws._
 import play.api.{ Logger, Play }
@@ -28,7 +30,7 @@ trait MeetupApi[A] {
     Cache.getAs[Future[Seq[A]]](cacheKey) match {
       case Some(c) => c
       case None =>
-        WS.url(s"https://api.meetup.com/2/$entityType")
+        val eventuallyMeetupResponse = WS.url(s"https://api.meetup.com/2/$entityType")
           .withQueryString(qs: _*)
           .get()
           .map { result =>
@@ -41,6 +43,12 @@ trait MeetupApi[A] {
               Seq.empty
             }
           }
+
+        val eventuallyTimeout = Promise.timeout("Meetup timeout", 3.seconds)
+        Future.firstCompletedOf(Seq(eventuallyMeetupResponse, eventuallyTimeout)).map {
+          case r: Seq[A] => r
+          case timeout: String => Seq.empty
+        }
     }
 
   }
