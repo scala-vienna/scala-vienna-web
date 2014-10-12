@@ -5,7 +5,7 @@ twitter = sebnozzi
 meetupEventId = 133130112
 meetupMemberId = 75099292
 homepage = "http://www.sebnozzi.com/"
-tags = "Scala,Play"
+tags = "Scala,Play Framework"
 slides = "https://speakerdeck.com/sebnozzi/play-a-la-rails/"
 ---
 My attempts to make my experience developing Play 2 web-applications (in Scala) more Rails-like.

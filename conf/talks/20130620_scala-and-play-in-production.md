@@ -4,7 +4,7 @@ speaker = Christian Papauschek
 twitter = papauschek
 meetupEventId = 108059472
 meetupMemberId = 89297042
-tags = "Scala,Play"
+tags = "Scala,Play Framework"
 slides = "http://de.slideshare.net/ChristianPapauschek/2013-0620scala-usergroupviennasektor5playframework2pitfalls"
 video = "http://www.youtube.com/watch?v=kMtiN33JI5M"
 ---
