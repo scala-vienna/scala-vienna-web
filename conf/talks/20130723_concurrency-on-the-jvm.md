@@ -1,6 +1,7 @@
 ---
 title = Concurrency on the JVM
 speaker = Bernhard Huemer
+twitter = bhuemer
 meetupEventId = 120993582
 meetupMemberId = 11605836
 tags = "JVM,Concurrency"

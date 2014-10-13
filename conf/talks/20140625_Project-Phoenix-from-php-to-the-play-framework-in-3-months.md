@@ -5,7 +5,7 @@ twitter = elmanu
 slides = "http://www.slideshare.net/ManuelBernhardt/project-phoenix-from-php-to-the-play-framework-in-3-months"
 meetupEventId = 183865162
 meetupMemberId = 67741712
-tags = "Scala, playframework"
+tags = "Scala,Play Framework"
 ---
 Talenthouse is a Los-Angeles based company offering an online platform for creative collaboration and brand advertisement. With over 3 million users, it is one of the most active platforms of its kind. In late 2013 it became clear that it was necessary to rebuild the platform, at that time based on the Zend PHP framework.
 

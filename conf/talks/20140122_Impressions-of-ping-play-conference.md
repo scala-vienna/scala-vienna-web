@@ -6,7 +6,7 @@ meetupEventId = 145315622
 meetupMemberId = 69371392
 homepage = "http://lachdrache.wordpress.com"
 slides = "http://alexanderdaniel.github.io/ping-conf-impressions/#/"
-tags = "Scala,pingconf,conference,Play"
+tags = "Scala,pingconf,conference,Play Framework"
 ---
 I'm talking about facts, impressions and summarize my favorite talks.
 

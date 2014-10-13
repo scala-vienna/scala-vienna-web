@@ -1,6 +1,7 @@
 ---
 title = Scalaz introduction
 speaker = Bernhard Huemer
+twitter = bhuemer
 meetupEventId = 120994612
 meetupMemberId = 11605836
 tags = "Scala,Scalaz,Functional Programming"
