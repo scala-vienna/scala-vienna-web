@@ -15,15 +15,22 @@ This is the [Play](http://www.playframework.com) application that powers the web
 - Grab and install [Play](http://www.playframework.com)
 - Install the [Chrome tools](https://chrome.google.com/webstore/detail/play-framework-tools/dchhggpgbommpcjpogaploblnpldbmen) to get the auto-reloading benefits
 - Check your meetup.com API key here http://www.meetup.com/meetup_api/key/
-- Create an environment variable with `export MEETUP_API_KEY=<your API key>`
-- Create a "Personal Access Token" for the app here https://github.com/settings/applications
-- Create an environment variable with the generated GitHub access token with `export GITHUB_API_KEY=<your API key>`
-- Check the source code for the meetup group id and replace it with your own (Yes! We need to refactor this out to the conf file! #29)
-- Run Play with `play ~ run` to enable continuous reloading during development
+- Configure the Meetup API authentication (see [Getting a Meetup API Key](https://secure.meetup.com/meetup_api/key/)):
+  - `export MEETUP_API_KEY=<your API key>`
+- Optional: configure a different Meetup group ID in the meetup.groupId key in the application.conf file
+- Configure GitHub API authentication. It you are part of the [Scala Vienna GitHub organization](https://github.com/scala-vienna) you will be able to access 
+the `client` id and the `client secret` keys in the ["Applications" section](https://github.com/organizations/scala-vienna/settings/applications/119475). 
+Otherwise asks us to be added or generate your own keys.
+  - `export GITHUB_AUTH_CLIENT_ID=<the GitHub application client id>`
+  - `export GITHUB_AUTH_CLIENT_SECRET=<the GitHub application secret>`
+- Use `activator` to start the app
 
 ## Deployment
 
-- We use [Travis CI](https://travis-ci.org/scala-vienna/scala-vienna-web) to automagically deploy **the master branch** to Heroku.
+We use [Travis CI](https://travis-ci.org/scala-vienna/scala-vienna-web) to automatically deploy to Heroku:
+ 
+- **the master branch** to the **production** app: http://www.scala-vienna.org
+- **the develop branch** to the **dev/test/stage** app: http://dev.scala-vienna.org
 
 # Feature Pipeline
 

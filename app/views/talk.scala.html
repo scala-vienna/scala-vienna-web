@@ -30,7 +30,7 @@
 			   	<div class="panel panel-default">
 			   		<div class="panel-heading">@talk.get.speaker</div>
 					<div class="panel-body">
-						<table class="table">
+						<table>
 					   	@talk.get.twitter.map { twitter =>
 					   		<tr>
 					   			<td>Twitter</td>
@@ -57,7 +57,7 @@
 			   	<div class="panel panel-default">
 			   		<div class="panel-heading">Talk</div>
 					<div class="panel-body">
-						<table class="table">
+						<table>
 					   	@talk.get.code.map { code =>
 					   		<tr>
 							   	<td>Code</td>
@@ -91,9 +91,9 @@
 		   	@talk.get.content
 		   	@if(!photos.isEmpty) {
 			<hr/>
-            <div class="row table">
+            <div class="row">
             @photos.map { photo =>
-                <div class="col-lg-3 col-sm-3 col-xs-12 thumb table-cell">
+                <div class="col-lg-3 col-sm-3 col-xs-12 thumb">
                     <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
                         <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
                     </a>

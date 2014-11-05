@@ -6,6 +6,6 @@ meetupEventId = 145316162
 meetupMemberId = 92597072
 homepage = "http://www.pichsenmeister.com"
 slides = "http://www.slideshare.net/3x14159265/scala-file-resources-31453535"
-tags = "Scala,Play"
+tags = "Scala,Play Framework"
 ---
 Plugins for file resource handling (like amazon s3 bucket) and image resizing on-the-fly via URL parameters in play 2 for scala.

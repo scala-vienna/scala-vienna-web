@@ -18,7 +18,7 @@ import play.api.Logger.warn
 import play.api.Play
 import play.api.Play.current
 import play.api.cache.Cache
-import play.api.templates.Html
+import play.twirl.api.Html
 
 import scala.concurrent.duration._
 

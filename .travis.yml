@@ -1,14 +1,20 @@
 language: scala
 scala:
-- 2.10.2
+- 2.11.1
+branches:
+  only:
+  - master
+  - develop
 deploy:
   provider: heroku
   api_key:
     secure: b4zy89j4iq/7Ve20lKKdX4lZkHl3Ups02SgPL40P4tTeqXVwtSepTptbFuUTwXGIh47Vdq35r68iT+w87im6VTJZg8vwesNbe3z3gYS5beeAd55QABrQUiSqGhNB6Tyl9dHPDqsrBVf81eOjTM2d6kxvdFfJ+7u8lGDEfZrlecI=
-  app: scala-vienna-prod
-  on:
-    repo: scala-vienna/scala-vienna-web
-MEETUP_API_KEY:
-  secure: qUTGe1d/hdYGtAq/H/oWpYmSf3wUvME6wopDTlMQaOUIrnUEtwHVbZ/w6W1bgjYwJLDH4o9pyn5lw25ICM+tWyj7ChldAlOGDWYp8P14UP/6MZyogL2psHc7aKbXncRd6WTlGHr8kYamxGDsCUuFYcVqRIQXmZSv4o0rw8Yn5e8=
-GITHUB_API_KEY:
-  secure: TGg7eioNdIZ/ccWHMlbSuo1qOswoYlcDE9h8HSVLyHEEFvGVYuFCs1NHgJLP+6uT95RgVWkBE1fIE7aEQ/m2JPB4i8VrON7OjIXSHHrbgLRMWc3ECrNWX8uAu/BG9FaAHNUKvvBpvi+jy8Ckxd9R7g5pfR9jZ04x9wdMl5FAyGI=
+  app:
+    master: scala-vienna-prod
+    develop: scala-vienna-dev
+# Encripted env vars: MEETUP_API_KEY, GITHUB_AUTH_CLIENT_ID, GITHUB_AUTH_CLIENT_SECRET
+env:
+  global:
+  - secure: "kDe2IKphFMO6Z4v64nw7b78S26jE3dvj+PJYboJCV9LEb3OHt4FFWBoymq3IcbfQWiyaNDt6HhRxh+Ve3BLI06uSDv+s7/hTsShY8wEkzhhjHWxMqVzuMmOKVMX79MHp45JPjVo4exIbPyx5CcbNMKvEz0CMuCoDnJ5JGJLLHeA="
+  - secure: "Ap1zbp61qPYe8eJeODY5VWmv4bTUBDoZfB9NVH7yoDVddQoB4ClzDSd0aPTu9sVs5aveR/i9dXc/++4KObrd5Lic3e67qcTLzsTOEPpKXtrGuZw0z5JLaXbxjJKiSz1Toww4Ye9Fjv1v7b7df9kROVsBsU2a1tdxI7wbhzM4iMQ="
+  - secure: "CVky8vspAO0tRsm1683KseDWXIW1nuyTn4cX7Za/axLn5p68oYK8679jAccjOLaaVVXmpN9KgHf1db8JpIxLDABYPVvSZhLRFkr9x5ygthZygIok/n1ZBbmSvFqS2EquzIcSDhPbVwSm6DKWlmYcn5QnpyanGPaTj8jCTwnji5U="

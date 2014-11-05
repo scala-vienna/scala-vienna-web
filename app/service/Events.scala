@@ -1,9 +1,13 @@
 package service
 
+import play.api.libs.concurrent.Promise
+import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.Future
 import play.api.libs.json._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.DateTime
+import scala.concurrent.duration._
 
 /**
  * Fetch events and more from Meetup
@@ -12,11 +16,18 @@ import org.joda.time.DateTime
  */
 object Events extends MeetupApi[MeetupEvent] {
 
-  def findAll(status: String): Future[Seq[MeetupEvent]] = findAll(
-    entityType = "events",
-    processor = transformEvents,
-    queryParams = "status" -> status, "text_format" -> "plain"
-  )
+  def findAll(status: String): Future[Seq[MeetupEvent]] = {
+    val eventuallyAllEvents = findAll(
+      entityType = "events",
+      processor = transformEvents,
+      queryParams = "status" -> status, "text_format" -> "plain"
+    )
+    val eventuallyTimeout = Promise.timeout("Meetup timeout", 3.seconds)
+    Future.firstCompletedOf(Seq(eventuallyAllEvents, eventuallyTimeout)).map {
+      case events: Seq[MeetupEvent] => events
+      case timeout: String => Seq.empty
+    }
+  }
 
   private def transformEvents(events: JsValue): Seq[MeetupEvent] = {
 

@@ -1,5 +1,7 @@
 package service
 
+import play.api.libs.concurrent.Promise
+
 import scala.concurrent.Future
 import play.api.libs.ws._
 import play.api.{ Logger, Play }
@@ -17,19 +19,18 @@ import scala.language.postfixOps
  */
 trait MeetupApi[A] {
 
-  val SCALA_VIENNA_GROUP_ID = "5700242"
-
   val envApiKey = scala.util.Properties.envOrElse("MEETUP_API_KEY", "")
   val apiKey = Play.configuration.getString("meetup.apiKey").getOrElse(envApiKey)
+  val meetupGrouId = Play.configuration.getString("meetup.groupId").getOrElse("5700242")
 
   def findAll(entityType: String, processor: JsValue => Seq[A], queryParams: (String, String)*): Future[Seq[A]] = {
-    val qs = Seq("group_id" -> SCALA_VIENNA_GROUP_ID, "key" -> apiKey) ++ queryParams
+    val qs = Seq("group_id" -> meetupGrouId, "key" -> apiKey) ++ queryParams
     val cacheKey = entityType + qs.mkString
 
     Cache.getAs[Future[Seq[A]]](cacheKey) match {
       case Some(c) => c
       case None =>
-        WS.url(s"https://api.meetup.com/2/$entityType")
+        val eventuallyMeetupResponse = WS.url(s"https://api.meetup.com/2/$entityType")
           .withQueryString(qs: _*)
           .get()
           .map { result =>
@@ -42,6 +43,12 @@ trait MeetupApi[A] {
               Seq.empty
             }
           }
+
+        val eventuallyTimeout = Promise.timeout("Meetup timeout", 3.seconds)
+        Future.firstCompletedOf(Seq(eventuallyMeetupResponse, eventuallyTimeout)).map {
+          case r: Seq[A] => r
+          case timeout: String => Seq.empty
+        }
     }
 
   }

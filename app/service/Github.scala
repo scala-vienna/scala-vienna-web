@@ -16,7 +16,7 @@
 
 package service
 
-import play.api.libs.ws.WS
+import play.api.libs.ws.{ WSAuthScheme, WS }
 import play.Logger
 import play.api.libs.json.Json
 import scala.concurrent.ExecutionContext
@@ -81,13 +81,18 @@ object Github {
     created_at: Option[Date],
     updated_at: Option[Date])
 
-  val apiKey = Play.configuration.getString("github.apiKey").getOrElse(scala.util.Properties.envOrElse("GITHUB_API_KEY", ""))
+  val githubRepo = Play.configuration.getString("github.repo").getOrElse("")
+  val githubAuthClientId = Play.configuration.getString("github.auth.clientId").getOrElse("")
+  val githubAuthClientSecret = Play.configuration.getString("github.auth.clientSecret").getOrElse("")
 
   implicit val contributorFormat = Json.format[Contributor]
 
   def getContributors: Future[List[Contributor]] = {
-    WS.url("https://api.github.com/repos/rafacm/scala-vienna-web/contributors")
-      .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
+    Logger.debug("githubRepo: ", githubRepo);
+    Logger.warn("githubAuthClientId: ", githubAuthClientId);
+    Logger.warn("githubAuthClientSecret: ", githubAuthClientSecret);
+
+    WS.url(s"https://api.github.com/repos/${githubRepo}/contributors?client_id=${githubAuthClientId}&client_secret=${githubAuthClientSecret}")
       .get().map(response =>
         if (response.status == 200) {
           response.json.validate[List[Contributor]]
@@ -100,7 +105,6 @@ object Github {
 
   def getUser(url: String): Future[Option[User]] = {
     WS.url(url)
-      .withAuth(apiKey, "x-oauth-basic", Realm.AuthScheme.BASIC)
       .get().map(response =>
         if (response.status == 200) {
           response.json.validate[User].map({ case user => Some(user) })
