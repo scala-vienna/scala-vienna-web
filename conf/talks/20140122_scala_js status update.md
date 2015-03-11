@@ -5,6 +5,6 @@ twitter = sebnozzi
 meetupEventId = 145315622
 meetupMemberId = 75099292
 homepage = "http://www.sebnozzi.com/"
-tags = "Scala,scala.js"
+tags = "Scala,Scala.js"
 ---
 Scala.js status update
