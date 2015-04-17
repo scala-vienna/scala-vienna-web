@@ -1,7 +1,7 @@
 @(talk: Option[service.Talk], speakers:Seq[String], tags:Seq[String], dates:Seq[String], photos: Seq[service.Photo])
-@layout.main("Talks", "talks") {
+@layout.main(talk.map(t => t.title + " - " + t.speaker), "talks") {
 
-<div class="container">
+<div class="container talk">
 	<div id='talks-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
     	<strong><em>Speakers</em></strong><br/>
     	@for(speaker <- speakers) { 
@@ -25,7 +25,7 @@
 				<div class="alert alert-warning">Sorry didn't find this one!</div>
 			} else {
 			<hr/>
-		   	<h3>@talk.get.title</h3>
+		   	<h1>@talk.get.title</h1>
 		   	<div class="col-lg-6">
 			   	<div class="panel panel-default">
 			   		<div class="panel-heading">@talk.get.speaker</div>
