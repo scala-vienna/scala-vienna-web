@@ -1,6 +1,6 @@
 @(title: String, posts: List[service.Post], tags: List[(String, Int)], authors: List[String])
 
-@layout.main("Blogs", "blogs") {
+@layout.main(Some("Blogs"), "blogs") {
 
     <div class="container">
         <div id='blogs-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">

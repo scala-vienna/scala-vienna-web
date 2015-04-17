@@ -1,4 +1,4 @@
-@(title: String, page: String, scripts: Html = Html(""))(content: Html)
+@(title: Option[String], page: String, scripts: Html = Html(""))(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
-    <title>Vienna Scala User Group - @title</title>
+    <title>@title.map(_ + " - Vienna Scala User Group").getOrElse("Vienna Scala User Group")</title>
 
     <!-- Bootstrap core CSS + JS -->
     <link rel="stylesheet" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">

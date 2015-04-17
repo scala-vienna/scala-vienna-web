@@ -79,6 +79,11 @@ p.entry-meta {
     margin-right: auto;
 }
 
+.talk h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
 /* some spacing for footer */
 footer {
     margin-top: 40px;

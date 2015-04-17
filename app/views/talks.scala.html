@@ -1,8 +1,8 @@
 @(talks: Seq[service.Talk], page:Int, pages:Int, speakers:Seq[String], tags:Seq[String], dates:Seq[String], tagFilter:Option[String], speakerFilter:Option[String], dateFilter:Option[String])
 @import service.Talks.dateUIFormat
-@layout.main("Talks", "talks") {
+@layout.main(Some("Talks"), "talks") {
 
-<div class="container">
+<div class="container talk">
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
