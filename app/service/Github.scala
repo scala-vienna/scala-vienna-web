@@ -92,7 +92,8 @@ object Github {
     Logger.warn("githubAuthClientId: ", githubAuthClientId);
     Logger.warn("githubAuthClientSecret: ", githubAuthClientSecret);
 
-    WS.url(s"https://api.github.com/repos/${githubRepo}/contributors?client_id=${githubAuthClientId}&client_secret=${githubAuthClientSecret}")
+    WS.url(s"https://api.github.com/repos/${githubRepo}/contributors")
+      .withAuth(githubAuthClientId, githubAuthClientSecret, AuthScheme.BASIC)
       .get().map(response =>
         if (response.status == 200) {
           response.json.validate[List[Contributor]]
